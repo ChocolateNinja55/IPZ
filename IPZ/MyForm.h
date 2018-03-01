@@ -35,6 +35,7 @@ namespace IPZ {
 			}
 		}
 	private: System::Windows::Forms::Button^  button1;
+	private: System::Windows::Forms::Button^  button2;
 	protected:
 
 	private:
@@ -51,6 +52,7 @@ namespace IPZ {
 		void InitializeComponent(void)
 		{
 			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// button1
@@ -63,11 +65,22 @@ namespace IPZ {
 			this->button1->Text = L"ELO";
 			this->button1->UseVisualStyleBackColor = false;
 			// 
+			// button2
+			// 
+			this->button2->Location = System::Drawing::Point(243, 290);
+			this->button2->Name = L"button2";
+			this->button2->Size = System::Drawing::Size(75, 23);
+			this->button2->TabIndex = 1;
+			this->button2->Text = L"button2";
+			this->button2->UseVisualStyleBackColor = true;
+			this->button2->Click += gcnew System::EventHandler(this, &MyForm::button2_Click);
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(282, 253);
+			this->ClientSize = System::Drawing::Size(508, 431);
+			this->Controls->Add(this->button2);
 			this->Controls->Add(this->button1);
 			this->Name = L"MyForm";
 			this->Text = L"MyForm";
@@ -75,5 +88,8 @@ namespace IPZ {
 
 		}
 #pragma endregion
+	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
+		std::cout << "ELO ELO KURWA!" << std::endl;
+	}
 	};
 }
