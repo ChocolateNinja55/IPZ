@@ -90,7 +90,7 @@ namespace IPZ {
 			// comboBox1
 			// 
 			this->comboBox1->FormattingEnabled = true;
-			this->comboBox1->Location = System::Drawing::Point(737, 78);
+			this->comboBox1->Location = System::Drawing::Point(697, 74);
 			this->comboBox1->Name = L"comboBox1";
 			this->comboBox1->Size = System::Drawing::Size(121, 24);
 			this->comboBox1->TabIndex = 2;

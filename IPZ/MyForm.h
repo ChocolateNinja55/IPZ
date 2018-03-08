@@ -118,7 +118,7 @@ namespace IPZ {
 			});
 			this->oProgramieToolStripMenuItem->Name = L"oProgramieToolStripMenuItem";
 			this->oProgramieToolStripMenuItem->Size = System::Drawing::Size(106, 24);
-			this->oProgramieToolStripMenuItem->Text = L"O programie";
+			this->oProgramieToolStripMenuItem->Text = L"&O programie";
 			// 
 			// pomocToolStripMenuItem
 			// 
@@ -244,9 +244,13 @@ private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e
 private: System::Void comboBox1_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
 }
 private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-	MyForm::Visible = false;
-	MyForm1 ^NoweOKno = gcnew MyForm1;
-	NoweOKno->Show();
+	if (comboBox1->Text == "")
+		MessageBox::Show("Podaj aktywn¹ kamerkê, by przejœæ dalej", "Stwierdzenie na luzie ziomeczku", MessageBoxButtons::OK, MessageBoxIcon::Information);
+	else {
+		MyForm::Visible = false;
+		MyForm1 ^NoweOKno = gcnew MyForm1;
+		NoweOKno->Show();
+	}
 }
 private: System::Void zamknijToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 	if (MessageBox::Show("Czy na pewno chcesz zamkn¹æ program ?", "Pytanko na luzie", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes)
