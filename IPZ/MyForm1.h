@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
+#include <string>
 #include <opencv2/opencv.hpp>
+//#include <opencv2/imgcodecs.hpp>
 #include <opencv2/highgui/highgui.hpp> 
 #include "opencv2/imgproc/imgproc.hpp" 
 namespace IPZ {
@@ -12,6 +14,7 @@ namespace IPZ {
 	using namespace System::Data;
 	using namespace System::Drawing;
 	using namespace cv;
+	using namespace std;
 	/// <summary>
 	/// Summary for MyForm1
 	/// </summary>
@@ -39,10 +42,18 @@ namespace IPZ {
 		}
 	private: System::Windows::Forms::Button^  button1;
 	protected:
-	private: System::Windows::Forms::Button^  button2;
+
 	private: System::Windows::Forms::ComboBox^  comboBox1;
-	private: System::Windows::Forms::Label^  label1;
+	private: System::Windows::Forms::Button^  button2;
 	private: System::Windows::Forms::PictureBox^  pictureBox1;
+	private: System::Windows::Forms::Label^  label1;
+	private: System::Windows::Forms::Button^  button3;
+
+
+
+
+	private: System::ComponentModel::IContainer^  components;
+
 
 
 
@@ -50,7 +61,7 @@ namespace IPZ {
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -61,10 +72,11 @@ namespace IPZ {
 		{
 			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm1::typeid));
 			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
-			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->button3 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -77,53 +89,65 @@ namespace IPZ {
 			this->button1->Text = L"Zamknij program";
 			this->button1->UseVisualStyleBackColor = true;
 			// 
-			// button2
-			// 
-			this->button2->Location = System::Drawing::Point(559, 472);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(186, 78);
-			this->button2->TabIndex = 1;
-			this->button2->Text = L"Wróæ do okna pocz¹tkowego";
-			this->button2->UseVisualStyleBackColor = true;
-			this->button2->Click += gcnew System::EventHandler(this, &MyForm1::button2_Click);
-			// 
 			// comboBox1
 			// 
 			this->comboBox1->FormattingEnabled = true;
-			this->comboBox1->Location = System::Drawing::Point(697, 74);
+			this->comboBox1->Location = System::Drawing::Point(771, 28);
 			this->comboBox1->Name = L"comboBox1";
 			this->comboBox1->Size = System::Drawing::Size(121, 24);
 			this->comboBox1->TabIndex = 2;
 			// 
-			// label1
+			// button2
 			// 
-			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(685, 28);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(173, 17);
-			this->label1->TabIndex = 3;
-			this->label1->Text = L"Wybierz mierzon¹ wartoœæ";
-			this->label1->Click += gcnew System::EventHandler(this, &MyForm1::label1_Click);
+			this->button2->Location = System::Drawing::Point(12, 325);
+			this->button2->Name = L"button2";
+			this->button2->Size = System::Drawing::Size(142, 23);
+			this->button2->TabIndex = 3;
+			this->button2->Text = L"Uruchom kamere";
+			this->button2->UseVisualStyleBackColor = true;
+			this->button2->Click += gcnew System::EventHandler(this, &MyForm1::button2_Click);
 			// 
 			// pictureBox1
 			// 
-			this->pictureBox1->Location = System::Drawing::Point(119, 168);
+			this->pictureBox1->Location = System::Drawing::Point(12, 50);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(100, 50);
+			this->pictureBox1->Size = System::Drawing::Size(550, 250);
 			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::AutoSize;
 			this->pictureBox1->TabIndex = 4;
 			this->pictureBox1->TabStop = false;
-			this->pictureBox1->Click += gcnew System::EventHandler(this, &MyForm1::pictureBox1_Click);
+			this->pictureBox1->WaitOnLoad = true;
+			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(238)));
+			this->label1->Location = System::Drawing::Point(46, 28);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(308, 19);
+			this->label1->TabIndex = 5;
+			this->label1->Text = L"Obraz przechwytywany z wybranej kamery";
+			// 
+			// button3
+			// 
+			this->button3->Location = System::Drawing::Point(173, 325);
+			this->button3->Name = L"button3";
+			this->button3->Size = System::Drawing::Size(118, 23);
+			this->button3->TabIndex = 6;
+			this->button3->Text = L"Zrób zdjêcie";
+			this->button3->UseVisualStyleBackColor = true;
+			this->button3->Click += gcnew System::EventHandler(this, &MyForm1::button3_Click);
 			// 
 			// MyForm1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(907, 562);
-			this->Controls->Add(this->pictureBox1);
+			this->Controls->Add(this->button3);
 			this->Controls->Add(this->label1);
-			this->Controls->Add(this->comboBox1);
+			this->Controls->Add(this->pictureBox1);
 			this->Controls->Add(this->button2);
+			this->Controls->Add(this->comboBox1);
 			this->Controls->Add(this->button1);
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->MinimizeBox = false;
@@ -135,15 +159,39 @@ namespace IPZ {
 
 		}
 #pragma endregion
-	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
+		bool clic = false;
+		void DrawCVImage(System::Windows::Forms::Control^ control, cv::Mat& colorImage)
+		{
+			System::Drawing::Graphics^ graphics = control->CreateGraphics();
+			System::IntPtr ptr(colorImage.ptr());
+			System::Drawing::Bitmap^ b = gcnew System::Drawing::Bitmap(colorImage.cols, colorImage.rows, colorImage.step, System::Drawing::Imaging::PixelFormat::Format24bppRgb, ptr);
+			System::Drawing::RectangleF rect(0, 0, control->Width, control->Height);
+			graphics->DrawImage(b, rect);
+			delete graphics;
+		}
 		
-	}
-	private: System::Void label1_Click(System::Object^  sender, System::EventArgs^  e) {
-	}
-private: System::Void process1_Exited(System::Object^  sender, System::EventArgs^  e) {
-	
+		void Image() {
+			VideoCapture capture = VideoCapture(0); 
+			Mat frame;
+				while (waitKey(15) != 27)
+				{
+					if ( clic == true)
+						capture.release();
+					else {
+					capture >> frame;
+					DrawCVImage(pictureBox1, frame);
+					}
+				}
+				capture.release();	
+			
+					
+		}
+
+private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
+		Image();
 }
-private: System::Void pictureBox1_Click(System::Object^  sender, System::EventArgs^  e) {
+private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
+	clic = true;
 }
 };
 }

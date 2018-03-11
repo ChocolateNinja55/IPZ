@@ -11,7 +11,7 @@ namespace IPZ {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
-	//using namespace System::Windows::Forms::DialogResult;
+	
 	/// <summary>
 	/// Summary for MyForm
 	/// </summary>
@@ -252,7 +252,8 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 		NoweOKno->Show();
 	}
 }
-private: System::Void zamknijToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+private: System::Void zamknijToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) 
+{
 	if (MessageBox::Show("Czy na pewno chcesz zamkn¹æ program ?", "Pytanko na luzie", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes)
 		Application::Exit();
 }
