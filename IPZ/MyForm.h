@@ -171,7 +171,6 @@ namespace IPZ {
 			this->comboBox1->Name = L"comboBox1";
 			this->comboBox1->Size = System::Drawing::Size(162, 24);
 			this->comboBox1->TabIndex = 3;
-			this->comboBox1->SelectedIndexChanged += gcnew System::EventHandler(this, &MyForm::comboBox1_SelectedIndexChanged);
 			this->comboBox1->TextChanged += gcnew System::EventHandler(this, &MyForm::comboBox1_TextChanged);
 			// 
 			// label1
@@ -245,16 +244,6 @@ namespace IPZ {
 		NoweOKno->Show();
 	}
 private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e) {
-}
-private: System::Void comboBox1_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
-	if(comboBox1->SelectedIndex==0)
-		MessageBox::Show("OCIECHUI_DZIALA","No to elo", MessageBoxButtons::OK, MessageBoxIcon::Information);
-	else
-		MessageBox::Show("Nie wybrales kamery w lapku ", "No to elo", MessageBoxButtons::OK, MessageBoxIcon::Information);
-	
-
-	
-
 }
 private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 	if (comboBox1->Text == "")

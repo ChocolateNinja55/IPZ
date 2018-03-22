@@ -11,7 +11,7 @@ int main(array < System::String ^> ^args)
 	Application::EnableVisualStyles();
 	Application::SetCompatibleTextRenderingDefault(false);
 	IPZ::MyForm forma;
-	IPZ::MyForm1 foremka;
+	
 	Application::Run(%forma);
 	
 	return(0);
