@@ -247,6 +247,14 @@ namespace IPZ {
 private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e) {
 }
 private: System::Void comboBox1_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
+	if(comboBox1->SelectedIndex==0)
+		MessageBox::Show("OCIECHUI_DZIALA","No to elo", MessageBoxButtons::OK, MessageBoxIcon::Information);
+	else
+		MessageBox::Show("Nie wybrales kamery w lapku ", "No to elo", MessageBoxButtons::OK, MessageBoxIcon::Information);
+	
+
+	
+
 }
 private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 	if (comboBox1->Text == "")
