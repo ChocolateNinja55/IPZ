@@ -13,6 +13,6 @@ int main(array < System::String ^> ^args)
 	IPZ::MyForm forma;
 	IPZ::MyForm1 foremka;
 	Application::Run(%forma);
-	//Application::Run(%foremka);
+	
 	return(0);
 }

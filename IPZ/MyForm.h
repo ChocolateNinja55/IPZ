@@ -46,7 +46,12 @@ namespace IPZ {
 	private: System::Windows::Forms::ToolStripMenuItem^  nieWiemCoTuMo¿eBycToolStripMenuItem;
 	private: System::Windows::Forms::Button^  button1;
 	private: System::Windows::Forms::CheckBox^  checkBox1;
-	private: System::Windows::Forms::ComboBox^  comboBox1;
+	public: System::Windows::Forms::ComboBox^  comboBox1;
+	private:
+
+	private:
+
+
 	private: System::Windows::Forms::Label^  label1;
 	private: System::Windows::Forms::Label^  label2;
 	private: System::Windows::Forms::ComboBox^  comboBox2;
@@ -123,14 +128,14 @@ namespace IPZ {
 			// pomocToolStripMenuItem
 			// 
 			this->pomocToolStripMenuItem->Name = L"pomocToolStripMenuItem";
-			this->pomocToolStripMenuItem->Size = System::Drawing::Size(216, 26);
+			this->pomocToolStripMenuItem->Size = System::Drawing::Size(137, 26);
 			this->pomocToolStripMenuItem->Text = L"&Pomoc";
 			this->pomocToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::pomocToolStripMenuItem_Click);
 			// 
 			// zamknijToolStripMenuItem
 			// 
 			this->zamknijToolStripMenuItem->Name = L"zamknijToolStripMenuItem";
-			this->zamknijToolStripMenuItem->Size = System::Drawing::Size(216, 26);
+			this->zamknijToolStripMenuItem->Size = System::Drawing::Size(137, 26);
 			this->zamknijToolStripMenuItem->Text = L"&Zamknij";
 			this->zamknijToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::zamknijToolStripMenuItem_Click);
 			// 
@@ -167,6 +172,7 @@ namespace IPZ {
 			this->comboBox1->Size = System::Drawing::Size(162, 24);
 			this->comboBox1->TabIndex = 3;
 			this->comboBox1->SelectedIndexChanged += gcnew System::EventHandler(this, &MyForm::comboBox1_SelectedIndexChanged);
+			this->comboBox1->TextChanged += gcnew System::EventHandler(this, &MyForm::comboBox1_TextChanged);
 			// 
 			// label1
 			// 
@@ -231,7 +237,6 @@ namespace IPZ {
 
 		}
 #pragma endregion
-		//MyForm1 foremka;
 
 	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
 	}
@@ -246,10 +251,20 @@ private: System::Void comboBox1_SelectedIndexChanged(System::Object^  sender, Sy
 private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 	if (comboBox1->Text == "")
 		MessageBox::Show("Podaj aktywn¹ kamerkê, by przejœæ dalej", "Stwierdzenie na luzie ziomeczku", MessageBoxButtons::OK, MessageBoxIcon::Information);
+
+	else if (comboBox1->Text == "Kamera w laptopie"){
+			MyForm::Visible = false;
+			MyForm1 ^NoweOKno = gcnew MyForm1(comboBox1->Text);
+			NoweOKno->Show();
+	}
+	else if (comboBox1->Text == "Kamera USB"){
+			MyForm::Visible = false;
+			MyForm1 ^NoweOKno = gcnew MyForm1(comboBox1->Text);
+			NoweOKno->Show();
+	}
 	else {
-		MyForm::Visible = false;
-		MyForm1 ^NoweOKno = gcnew MyForm1;
-		NoweOKno->Show();
+		MessageBox::Show("Podaj poprawne urz¹dzenie ziomeczku!", "B³¹d na luzie ziomeczku", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
+		return;
 	}
 }
 private: System::Void zamknijToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) 
@@ -257,5 +272,9 @@ private: System::Void zamknijToolStripMenuItem_Click(System::Object^  sender, Sy
 	if (MessageBox::Show("Czy na pewno chcesz zamkn¹æ program ?", "Pytanko na luzie", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes)
 		Application::Exit();
 }
+private: System::Void comboBox1_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+
+}		
+	
 };
 }

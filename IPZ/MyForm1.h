@@ -1,11 +1,11 @@
 #pragma once
 #include <iostream>
 #include <Windows.h>
-#include <string>
 #include <opencv2/opencv.hpp>
 //#include <opencv2/imgcodecs.hpp>
 #include <opencv2/highgui/highgui.hpp> 
-#include "opencv2/imgproc/imgproc.hpp" 
+#include "opencv2/imgproc/imgproc.hpp"
+
 namespace IPZ {
 
 	using namespace System;
@@ -17,21 +17,33 @@ namespace IPZ {
 
 	using namespace cv;
 	using namespace std;
+	
 	bool DoEvents();
+
 	/// <summary>
 	/// Summary for MyForm1
 	/// </summary>
 	public ref class MyForm1 : public System::Windows::Forms::Form
 	{
 	public:
+		System::String^ word;
+	public:
 		MyForm1(void)
 		{
 			InitializeComponent();
+			label8->Text = Convert::ToString(trackBar1->Value);
+			label9->Text = Convert::ToString(trackBar2->Value);
 			//
 			//TODO: Add the constructor code here
 			//
 		}
-
+		MyForm1(System::String^ text) 
+		{
+			InitializeComponent();
+			word = text;
+			//TODO: Add the constructor code here
+			//
+		}
 	protected:
 		/// <summary>
 		/// Clean up any resources being used.
@@ -45,9 +57,11 @@ namespace IPZ {
 		
 		}
 	private: System::Windows::Forms::Button^  button1;
+
+
 	protected:
 
-	private: System::Windows::Forms::ComboBox^  comboBox1;
+
 	private: System::Windows::Forms::Button^  button2;
 	private: System::Windows::Forms::PictureBox^  pictureBox1;
 	private: System::Windows::Forms::Label^  label1;
@@ -61,6 +75,10 @@ namespace IPZ {
 	private: System::Windows::Forms::Label^  label4;
 	private: System::Windows::Forms::Label^  label5;
 	private: System::Windows::Forms::Label^  label6;
+	private: System::Windows::Forms::Label^  label7;
+	private: System::Windows::Forms::Label^  label8;
+	private: System::Windows::Forms::Label^  label9;
+
 
 
 
@@ -87,7 +105,6 @@ namespace IPZ {
 		{
 			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm1::typeid));
 			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
@@ -101,6 +118,9 @@ namespace IPZ {
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->label6 = (gcnew System::Windows::Forms::Label());
+			this->label7 = (gcnew System::Windows::Forms::Label());
+			this->label8 = (gcnew System::Windows::Forms::Label());
+			this->label9 = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->BeginInit();
@@ -117,14 +137,6 @@ namespace IPZ {
 			this->button1->Text = L"Zamknij program";
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &MyForm1::button1_Click);
-			// 
-			// comboBox1
-			// 
-			this->comboBox1->FormattingEnabled = true;
-			this->comboBox1->Location = System::Drawing::Point(706, 28);
-			this->comboBox1->Name = L"comboBox1";
-			this->comboBox1->Size = System::Drawing::Size(121, 24);
-			this->comboBox1->TabIndex = 2;
 			// 
 			// button2
 			// 
@@ -196,6 +208,7 @@ namespace IPZ {
 			this->trackBar1->Size = System::Drawing::Size(322, 56);
 			this->trackBar1->TabIndex = 10;
 			this->trackBar1->Value = 100;
+			this->trackBar1->ValueChanged += gcnew System::EventHandler(this, &MyForm1::trackBar1_ValueChanged);
 			// 
 			// trackBar2
 			// 
@@ -205,6 +218,7 @@ namespace IPZ {
 			this->trackBar2->Size = System::Drawing::Size(337, 56);
 			this->trackBar2->TabIndex = 11;
 			this->trackBar2->Value = 120;
+			this->trackBar2->ValueChanged += gcnew System::EventHandler(this, &MyForm1::trackBar2_ValueChanged);
 			// 
 			// label2
 			// 
@@ -247,17 +261,45 @@ namespace IPZ {
 			// label6
 			// 
 			this->label6->AutoSize = true;
-			this->label6->Location = System::Drawing::Point(856, 29);
+			this->label6->Location = System::Drawing::Point(332, 398);
 			this->label6->Name = L"label6";
-			this->label6->Size = System::Drawing::Size(46, 17);
+			this->label6->Size = System::Drawing::Size(114, 17);
 			this->label6->TabIndex = 16;
-			this->label6->Text = L"label6";
+			this->label6->Text = L"Obecna wartoúÊ:";
+			// 
+			// label7
+			// 
+			this->label7->AutoSize = true;
+			this->label7->Location = System::Drawing::Point(332, 492);
+			this->label7->Name = L"label7";
+			this->label7->Size = System::Drawing::Size(114, 17);
+			this->label7->TabIndex = 17;
+			this->label7->Text = L"Obecna wartoúÊ:";
+			// 
+			// label8
+			// 
+			this->label8->AutoSize = true;
+			this->label8->Location = System::Drawing::Point(448, 398);
+			this->label8->Name = L"label8";
+			this->label8->Size = System::Drawing::Size(0, 17);
+			this->label8->TabIndex = 18;
+			// 
+			// label9
+			// 
+			this->label9->AutoSize = true;
+			this->label9->Location = System::Drawing::Point(448, 492);
+			this->label9->Name = L"label9";
+			this->label9->Size = System::Drawing::Size(0, 17);
+			this->label9->TabIndex = 19;
 			// 
 			// MyForm1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1268, 883);
+			this->Controls->Add(this->label9);
+			this->Controls->Add(this->label8);
+			this->Controls->Add(this->label7);
 			this->Controls->Add(this->label6);
 			this->Controls->Add(this->label5);
 			this->Controls->Add(this->label4);
@@ -271,12 +313,12 @@ namespace IPZ {
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->pictureBox1);
 			this->Controls->Add(this->button2);
-			this->Controls->Add(this->comboBox1);
 			this->Controls->Add(this->button1);
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->MinimizeBox = false;
 			this->Name = L"MyForm1";
 			this->Text = L"Morfologia";
+			this->Load += gcnew System::EventHandler(this, &MyForm1::MyForm1_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->EndInit();
@@ -287,11 +329,10 @@ namespace IPZ {
 
 		}
 #pragma endregion
-		bool clic = false;
-		bool buton = false;
+		
+		int var;
 
-		void DrawCVImage(System::Windows::Forms::Control^ control, cv::Mat& colorImage)
-		{
+		void DrawCVImage(System::Windows::Forms::Control^ control, cv::Mat& colorImage){
 			System::Drawing::Graphics^ graphics = control->CreateGraphics();
 			System::IntPtr ptr(colorImage.ptr());
 			System::Drawing::Bitmap^ b = gcnew System::Drawing::Bitmap(colorImage.cols, colorImage.rows, colorImage.step, System::Drawing::Imaging::PixelFormat::Format24bppRgb, ptr);
@@ -299,23 +340,26 @@ namespace IPZ {
 			graphics->DrawImage(b, rect);
 			delete graphics;
 		}
-		void DrawCVImage1(System::Windows::Forms::Control^ control, cv::Mat& colorImage)
-		{
+		void DrawCVImage1(System::Windows::Forms::Control^ control, cv::Mat& colorImage){
 			System::Drawing::Graphics^ graphics = control->CreateGraphics();
 			System::IntPtr ptr(colorImage.ptr());
 			System::Drawing::Bitmap^ b = gcnew System::Drawing::Bitmap(colorImage.cols, colorImage.rows, colorImage.step, System::Drawing::Imaging::PixelFormat::Format8bppIndexed, ptr);
 			System::Drawing::RectangleF rect(0, 0, control->Width, control->Height);
 			graphics->DrawImage(b, rect);
-			
 			delete graphics;
 		}
-		
-		
 		void Image() {
-			VideoCapture capture = VideoCapture(0); 
+			
+			VideoCapture capture = VideoCapture(var); 
 			Mat frame, img, hsv_img,hsv,picture,picture_2,picture_3;
 			vector<Mat> hsv_split;
+			capture >> frame;
 			
+			if (!capture.isOpened())
+			{
+				MessageBox::Show("B≥πd kamery! sprÛbuj pod≥πczyÊ jeszcze raz.", "B≥πd", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
 				while (waitKey(15) != 27)
 				{
 					capture >> frame;
@@ -328,19 +372,15 @@ namespace IPZ {
 					//mask = cv2.inRange(hsv, x,y)
 					inRange(hsv_split[0], x, y, picture);
 					//inRange(hsv_split[1], x, y, dwa);
-					inRange(picture_3, trackBar1->Value, trackBar2->Value,picture_2);
-
+					inRange(picture_3, trackBar1->Value, trackBar2->Value, picture_2);
 					DrawCVImage(pictureBox1, frame);
-					DrawCVImage1(pictureBox2,picture);
+					DrawCVImage1(pictureBox2, picture);
 					DrawCVImage1(pictureBox3, picture_2);
-					clic = true;
-					
 					if (!DoEvents())
-						break;	
+						break;
 				}
 				capture.release();
 		}
-
 		bool DoEvents()
 		{
 			MSG msg;
@@ -362,15 +402,13 @@ namespace IPZ {
 					::DispatchMessage(&msg);
 				}
 			}
-
 			return true;
 		}
-
 private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
 		Image();
 }
 private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
-	buton = true;	
+	
 }
 	
 private: System::Void toolStrip1_ItemClicked(System::Object^  sender, System::Windows::Forms::ToolStripItemClickedEventArgs^  e) {
@@ -380,7 +418,26 @@ private: System::Void label2_Click(System::Object^  sender, System::EventArgs^  
 private: System::Void label3_Click(System::Object^  sender, System::EventArgs^  e) {
 }
 private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-	Close();
+	Application::Exit();
+}
+	private: System::Void trackBar1_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
+
+	}
+private: System::Void trackBar2_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
+}
+private: System::Void label10_Click(System::Object^  sender, System::EventArgs^  e) {
+}
+private: System::Void MyForm1_Load(System::Object^  sender, System::EventArgs^  e) {
+
+	if (word == "Kamera w laptopie")
+		var = 0;
+	else if (word == "Kamera USB")
+		var = 1;
+	else
+	{
+		var = -1;
+		MessageBox::Show("Sprawdü po≥πczenie kamerki!", "B≥πd", MessageBoxButtons::OK, MessageBoxIcon::Error);
+	}
 }
 };
 }
