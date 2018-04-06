@@ -5,6 +5,7 @@
 //#include <opencv2/imgcodecs.hpp>
 #include <opencv2/highgui/highgui.hpp> 
 #include "opencv2/imgproc/imgproc.hpp"
+#include "Help_myform.h"
 
 namespace IPZ {
 
@@ -25,22 +26,31 @@ namespace IPZ {
 	/// </summary>
 	public ref class MyForm1 : public System::Windows::Forms::Form
 	{
+
+	public:System::String^ word;
+	public: int xd;
+	public: System::String^ USB_name;
+	private: System::Windows::Forms::Label^  label10;
 	public:
-		System::String^ word;
+	public: System::String^ znaczki;
+
 	public:
 		MyForm1(void)
 		{
 			InitializeComponent();
-			label8->Text = Convert::ToString(trackBar1->Value);
-			label9->Text = Convert::ToString(trackBar2->Value);
 			//
 			//TODO: Add the constructor code here
 			//
 		}
-		MyForm1(System::String^ text) 
+		MyForm1(System::String^ text,System::String ^usb_name,int var) 
 		{
 			InitializeComponent();
 			word = text;
+			xd = var;
+			USB_name = usb_name;
+			label8->Text = Convert::ToString(trackBar1->Value);
+			label9->Text = Convert::ToString(trackBar2->Value);
+			this->Width = 600;
 			//TODO: Add the constructor code here
 			//
 		}
@@ -78,6 +88,18 @@ namespace IPZ {
 	private: System::Windows::Forms::Label^  label7;
 	private: System::Windows::Forms::Label^  label8;
 	private: System::Windows::Forms::Label^  label9;
+	private: System::Windows::Forms::MenuStrip^  menuStrip1;
+	private: System::Windows::Forms::ToolStripMenuItem^  plikToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  synchronizacjaToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  menuZawansowaneToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  pomocToolStripMenuItem;
+	private: System::Windows::Forms::Button^  button4;
+	private: System::Windows::Forms::RadioButton^  radioButton1;
+	private: System::Windows::Forms::NumericUpDown^  numericUpDown1;
+	private: System::Windows::Forms::ComboBox^  comboBox1;
+	private: System::Windows::Forms::PictureBox^  pictureBox4;
+	private: System::Windows::Forms::Button^  button5;
+	private: System::IO::Ports::SerialPort^  serialPort1;
 
 
 
@@ -103,6 +125,7 @@ namespace IPZ {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->components = (gcnew System::ComponentModel::Container());
 			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm1::typeid));
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->button2 = (gcnew System::Windows::Forms::Button());
@@ -121,11 +144,27 @@ namespace IPZ {
 			this->label7 = (gcnew System::Windows::Forms::Label());
 			this->label8 = (gcnew System::Windows::Forms::Label());
 			this->label9 = (gcnew System::Windows::Forms::Label());
+			this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
+			this->plikToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->synchronizacjaToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->menuZawansowaneToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->pomocToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->button4 = (gcnew System::Windows::Forms::Button());
+			this->radioButton1 = (gcnew System::Windows::Forms::RadioButton());
+			this->numericUpDown1 = (gcnew System::Windows::Forms::NumericUpDown());
+			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
+			this->pictureBox4 = (gcnew System::Windows::Forms::PictureBox());
+			this->button5 = (gcnew System::Windows::Forms::Button());
+			this->serialPort1 = (gcnew System::IO::Ports::SerialPort(this->components));
+			this->label10 = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar2))->BeginInit();
+			this->menuStrip1->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox4))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// button1
@@ -140,6 +179,8 @@ namespace IPZ {
 			// 
 			// button2
 			// 
+			this->button2->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(238)));
 			this->button2->Location = System::Drawing::Point(12, 325);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(142, 23);
@@ -151,9 +192,10 @@ namespace IPZ {
 			// pictureBox1
 			// 
 			this->pictureBox1->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
+			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
 			this->pictureBox1->Location = System::Drawing::Point(12, 50);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(550, 250);
+			this->pictureBox1->Size = System::Drawing::Size(448, 254);
 			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::AutoSize;
 			this->pictureBox1->TabIndex = 4;
 			this->pictureBox1->TabStop = false;
@@ -172,13 +214,14 @@ namespace IPZ {
 			// 
 			// button3
 			// 
+			this->button3->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(238)));
 			this->button3->Location = System::Drawing::Point(173, 325);
 			this->button3->Name = L"button3";
 			this->button3->Size = System::Drawing::Size(118, 23);
 			this->button3->TabIndex = 6;
 			this->button3->Text = L"Zamknij stream";
 			this->button3->UseVisualStyleBackColor = true;
-			this->button3->Click += gcnew System::EventHandler(this, &MyForm1::button3_Click);
 			// 
 			// pictureBox2
 			// 
@@ -202,43 +245,43 @@ namespace IPZ {
 			// 
 			// trackBar1
 			// 
-			this->trackBar1->Location = System::Drawing::Point(12, 418);
+			this->trackBar1->Location = System::Drawing::Point(12, 398);
 			this->trackBar1->Maximum = 255;
 			this->trackBar1->Name = L"trackBar1";
 			this->trackBar1->Size = System::Drawing::Size(322, 56);
 			this->trackBar1->TabIndex = 10;
 			this->trackBar1->Value = 100;
-			this->trackBar1->ValueChanged += gcnew System::EventHandler(this, &MyForm1::trackBar1_ValueChanged);
 			// 
 			// trackBar2
 			// 
-			this->trackBar2->Location = System::Drawing::Point(12, 512);
+			this->trackBar2->Location = System::Drawing::Point(12, 477);
 			this->trackBar2->Maximum = 255;
 			this->trackBar2->Name = L"trackBar2";
 			this->trackBar2->Size = System::Drawing::Size(337, 56);
 			this->trackBar2->TabIndex = 11;
 			this->trackBar2->Value = 120;
-			this->trackBar2->ValueChanged += gcnew System::EventHandler(this, &MyForm1::trackBar2_ValueChanged);
 			// 
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(63, 398);
+			this->label2->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(238)));
+			this->label2->Location = System::Drawing::Point(60, 369);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(174, 17);
+			this->label2->Size = System::Drawing::Size(197, 19);
 			this->label2->TabIndex = 12;
 			this->label2->Text = L"Dolna wartoœæ progowania";
-			this->label2->Click += gcnew System::EventHandler(this, &MyForm1::label2_Click);
 			// 
 			// label3
 			// 
 			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(60, 492);
+			this->label3->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(238)));
+			this->label3->Location = System::Drawing::Point(60, 457);
 			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(177, 17);
+			this->label3->Size = System::Drawing::Size(200, 19);
 			this->label3->TabIndex = 13;
 			this->label3->Text = L"Górna wartoœæ progowania";
-			this->label3->Click += gcnew System::EventHandler(this, &MyForm1::label3_Click);
 			// 
 			// label4
 			// 
@@ -261,42 +304,172 @@ namespace IPZ {
 			// label6
 			// 
 			this->label6->AutoSize = true;
-			this->label6->Location = System::Drawing::Point(332, 398);
+			this->label6->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(238)));
+			this->label6->Location = System::Drawing::Point(310, 369);
 			this->label6->Name = L"label6";
-			this->label6->Size = System::Drawing::Size(114, 17);
+			this->label6->Size = System::Drawing::Size(130, 19);
 			this->label6->TabIndex = 16;
 			this->label6->Text = L"Obecna wartoœæ:";
 			// 
 			// label7
 			// 
 			this->label7->AutoSize = true;
-			this->label7->Location = System::Drawing::Point(332, 492);
+			this->label7->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(238)));
+			this->label7->Location = System::Drawing::Point(310, 453);
 			this->label7->Name = L"label7";
-			this->label7->Size = System::Drawing::Size(114, 17);
+			this->label7->Size = System::Drawing::Size(130, 19);
 			this->label7->TabIndex = 17;
 			this->label7->Text = L"Obecna wartoœæ:";
 			// 
 			// label8
 			// 
 			this->label8->AutoSize = true;
-			this->label8->Location = System::Drawing::Point(448, 398);
+			this->label8->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(238)));
+			this->label8->Location = System::Drawing::Point(446, 369);
 			this->label8->Name = L"label8";
-			this->label8->Size = System::Drawing::Size(0, 17);
+			this->label8->Size = System::Drawing::Size(0, 19);
 			this->label8->TabIndex = 18;
 			// 
 			// label9
 			// 
 			this->label9->AutoSize = true;
-			this->label9->Location = System::Drawing::Point(448, 492);
+			this->label9->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(238)));
+			this->label9->Location = System::Drawing::Point(446, 453);
 			this->label9->Name = L"label9";
-			this->label9->Size = System::Drawing::Size(0, 17);
+			this->label9->Size = System::Drawing::Size(0, 19);
 			this->label9->TabIndex = 19;
+			// 
+			// menuStrip1
+			// 
+			this->menuStrip1->ImageScalingSize = System::Drawing::Size(20, 20);
+			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->plikToolStripMenuItem,
+					this->pomocToolStripMenuItem
+			});
+			this->menuStrip1->Location = System::Drawing::Point(0, 0);
+			this->menuStrip1->Name = L"menuStrip1";
+			this->menuStrip1->Size = System::Drawing::Size(1272, 28);
+			this->menuStrip1->TabIndex = 20;
+			this->menuStrip1->Text = L"menuStrip1";
+			// 
+			// plikToolStripMenuItem
+			// 
+			this->plikToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->synchronizacjaToolStripMenuItem,
+					this->menuZawansowaneToolStripMenuItem
+			});
+			this->plikToolStripMenuItem->Name = L"plikToolStripMenuItem";
+			this->plikToolStripMenuItem->Size = System::Drawing::Size(44, 24);
+			this->plikToolStripMenuItem->Text = L"&Plik";
+			// 
+			// synchronizacjaToolStripMenuItem
+			// 
+			this->synchronizacjaToolStripMenuItem->Name = L"synchronizacjaToolStripMenuItem";
+			this->synchronizacjaToolStripMenuItem->Size = System::Drawing::Size(219, 26);
+			this->synchronizacjaToolStripMenuItem->Text = L"&Synchronizacja";
+			this->synchronizacjaToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm1::synchronizacjaToolStripMenuItem_Click);
+			// 
+			// menuZawansowaneToolStripMenuItem
+			// 
+			this->menuZawansowaneToolStripMenuItem->Name = L"menuZawansowaneToolStripMenuItem";
+			this->menuZawansowaneToolStripMenuItem->Size = System::Drawing::Size(219, 26);
+			this->menuZawansowaneToolStripMenuItem->Text = L"&Menu Zawansowane";
+			this->menuZawansowaneToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm1::menuZawansowaneToolStripMenuItem_Click);
+			// 
+			// pomocToolStripMenuItem
+			// 
+			this->pomocToolStripMenuItem->Name = L"pomocToolStripMenuItem";
+			this->pomocToolStripMenuItem->Size = System::Drawing::Size(66, 24);
+			this->pomocToolStripMenuItem->Text = L"P&omoc";
+			this->pomocToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm1::pomocToolStripMenuItem_Click);
+			// 
+			// button4
+			// 
+			this->button4->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(238)));
+			this->button4->Location = System::Drawing::Point(315, 325);
+			this->button4->Name = L"button4";
+			this->button4->Size = System::Drawing::Size(131, 23);
+			this->button4->TabIndex = 21;
+			this->button4->Text = L"Zrób zdjêcie";
+			this->button4->UseVisualStyleBackColor = true;
+			// 
+			// radioButton1
+			// 
+			this->radioButton1->AutoSize = true;
+			this->radioButton1->Location = System::Drawing::Point(706, 82);
+			this->radioButton1->Name = L"radioButton1";
+			this->radioButton1->Size = System::Drawing::Size(110, 21);
+			this->radioButton1->TabIndex = 22;
+			this->radioButton1->TabStop = true;
+			this->radioButton1->Text = L"radioButton1";
+			this->radioButton1->UseVisualStyleBackColor = true;
+			// 
+			// numericUpDown1
+			// 
+			this->numericUpDown1->Location = System::Drawing::Point(909, 93);
+			this->numericUpDown1->Name = L"numericUpDown1";
+			this->numericUpDown1->Size = System::Drawing::Size(120, 22);
+			this->numericUpDown1->TabIndex = 23;
+			// 
+			// comboBox1
+			// 
+			this->comboBox1->FormattingEnabled = true;
+			this->comboBox1->Location = System::Drawing::Point(728, 154);
+			this->comboBox1->Name = L"comboBox1";
+			this->comboBox1->Size = System::Drawing::Size(121, 24);
+			this->comboBox1->TabIndex = 24;
+			// 
+			// pictureBox4
+			// 
+			this->pictureBox4->Location = System::Drawing::Point(90, 651);
+			this->pictureBox4->Name = L"pictureBox4";
+			this->pictureBox4->Size = System::Drawing::Size(100, 50);
+			this->pictureBox4->TabIndex = 25;
+			this->pictureBox4->TabStop = false;
+			// 
+			// button5
+			// 
+			this->button5->Location = System::Drawing::Point(975, 138);
+			this->button5->Name = L"button5";
+			this->button5->Size = System::Drawing::Size(75, 23);
+			this->button5->TabIndex = 26;
+			this->button5->Text = L"button5";
+			this->button5->UseVisualStyleBackColor = true;
+			this->button5->Click += gcnew System::EventHandler(this, &MyForm1::button5_Click);
+			// 
+			// serialPort1
+			// 
+			this->serialPort1->PortName = L"COM2";
+			this->serialPort1->ReadTimeout = 300;
+			this->serialPort1->WriteTimeout = 300;
+			this->serialPort1->DataReceived += gcnew System::IO::Ports::SerialDataReceivedEventHandler(this, &MyForm1::serialPort1_DataReceived);
+			// 
+			// label10
+			// 
+			this->label10->AutoSize = true;
+			this->label10->Location = System::Drawing::Point(789, 185);
+			this->label10->Name = L"label10";
+			this->label10->Size = System::Drawing::Size(54, 17);
+			this->label10->TabIndex = 27;
+			this->label10->Text = L"label10";
 			// 
 			// MyForm1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(1268, 883);
+			this->ClientSize = System::Drawing::Size(1272, 883);
+			this->Controls->Add(this->label10);
+			this->Controls->Add(this->button5);
+			this->Controls->Add(this->pictureBox4);
+			this->Controls->Add(this->comboBox1);
+			this->Controls->Add(this->numericUpDown1);
+			this->Controls->Add(this->radioButton1);
+			this->Controls->Add(this->button4);
 			this->Controls->Add(this->label9);
 			this->Controls->Add(this->label8);
 			this->Controls->Add(this->label7);
@@ -314,7 +487,10 @@ namespace IPZ {
 			this->Controls->Add(this->pictureBox1);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->button1);
+			this->Controls->Add(this->menuStrip1);
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
+			this->MainMenuStrip = this->menuStrip1;
+			this->MaximizeBox = false;
 			this->MinimizeBox = false;
 			this->Name = L"MyForm1";
 			this->Text = L"Morfologia";
@@ -324,13 +500,16 @@ namespace IPZ {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar2))->EndInit();
+			this->menuStrip1->ResumeLayout(false);
+			this->menuStrip1->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox4))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
-		
-		int var;
+public:int var;
 
 		void DrawCVImage(System::Windows::Forms::Control^ control, cv::Mat& colorImage){
 			System::Drawing::Graphics^ graphics = control->CreateGraphics();
@@ -362,6 +541,8 @@ namespace IPZ {
 			}
 				while (waitKey(15) != 27)
 				{
+					label8->Text = Convert::ToString(trackBar1->Value);
+					label9->Text = Convert::ToString(trackBar2->Value);
 					capture >> frame;
 					frame.copyTo(img);
 					cvtColor(img, picture_3, CV_RGB2GRAY);
@@ -407,25 +588,8 @@ namespace IPZ {
 private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
 		Image();
 }
-private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
-	
-}
-	
-private: System::Void toolStrip1_ItemClicked(System::Object^  sender, System::Windows::Forms::ToolStripItemClickedEventArgs^  e) {
-}
-private: System::Void label2_Click(System::Object^  sender, System::EventArgs^  e) {
-}
-private: System::Void label3_Click(System::Object^  sender, System::EventArgs^  e) {
-}
 private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 	Application::Exit();
-}
-	private: System::Void trackBar1_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
-
-	}
-private: System::Void trackBar2_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
-}
-private: System::Void label10_Click(System::Object^  sender, System::EventArgs^  e) {
 }
 private: System::Void MyForm1_Load(System::Object^  sender, System::EventArgs^  e) {
 
@@ -433,11 +597,47 @@ private: System::Void MyForm1_Load(System::Object^  sender, System::EventArgs^  
 		var = 0;
 	else if (word == "Kamera USB")
 		var = 1;
-	else
-	{
+	else{
 		var = -1;
 		MessageBox::Show("SprawdŸ po³¹czenie kamerki!", "B³¹d", MessageBoxButtons::OK, MessageBoxIcon::Error);
 	}
+}
+private: System::Void pomocToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+	Help_myform ^NoweOKno = gcnew Help_myform;
+	NoweOKno->Show();
+}
+private: System::Void synchronizacjaToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+
+}
+private: System::Void menuZawansowaneToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+	
+	if (menuZawansowaneToolStripMenuItem->Checked == false) {
+		this->menuZawansowaneToolStripMenuItem->Checked = true;
+		this->Width = 1290;
+	}
+	else {
+		menuZawansowaneToolStripMenuItem->Checked = false;
+		this->Width = 600;
+	}
+}
+
+private: System::Void button5_Click(System::Object^  sender, System::EventArgs^  e) {
+	bool fd = false;
+	if (xd == true){
+		serialPort1->PortName = USB_name;
+		serialPort1->Open();
+
+		if ((serialPort1->IsOpen == true)&&(fd == false))
+		{
+			serialPort1->WriteLine("A");
+			label10->Text = znaczki;
+			fd = true;
+		}
+		fd = false;
+	}
+}
+private: System::Void serialPort1_DataReceived(System::Object^  sender, System::IO::Ports::SerialDataReceivedEventArgs^  e) {
+	this->znaczki = serialPort1->ReadLine();
 }
 };
 }
