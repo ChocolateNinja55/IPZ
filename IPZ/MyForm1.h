@@ -31,6 +31,14 @@ namespace IPZ {
 	public: int xd;
 	public: System::String^ USB_name;
 	private: System::Windows::Forms::Label^  label10;
+	private: System::Windows::Forms::Label^  label11;
+	private: System::Windows::Forms::CheckBox^  checkBox1;
+	private: System::Windows::Forms::Label^  label12;
+	private: System::Windows::Forms::CheckBox^  checkBox2;
+	private: System::Windows::Forms::Label^  label13;
+	private: System::Windows::Forms::PictureBox^  pictureBox5;
+	private: System::Windows::Forms::ImageList^  imageList1;
+	private: System::Windows::Forms::Button^  button6;
 	public:
 	public: System::String^ znaczki;
 
@@ -94,7 +102,7 @@ namespace IPZ {
 	private: System::Windows::Forms::ToolStripMenuItem^  menuZawansowaneToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  pomocToolStripMenuItem;
 	private: System::Windows::Forms::Button^  button4;
-	private: System::Windows::Forms::RadioButton^  radioButton1;
+
 	private: System::Windows::Forms::NumericUpDown^  numericUpDown1;
 	private: System::Windows::Forms::ComboBox^  comboBox1;
 	private: System::Windows::Forms::PictureBox^  pictureBox4;
@@ -150,13 +158,20 @@ namespace IPZ {
 			this->menuZawansowaneToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->pomocToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->button4 = (gcnew System::Windows::Forms::Button());
-			this->radioButton1 = (gcnew System::Windows::Forms::RadioButton());
 			this->numericUpDown1 = (gcnew System::Windows::Forms::NumericUpDown());
 			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
 			this->pictureBox4 = (gcnew System::Windows::Forms::PictureBox());
 			this->button5 = (gcnew System::Windows::Forms::Button());
 			this->serialPort1 = (gcnew System::IO::Ports::SerialPort(this->components));
 			this->label10 = (gcnew System::Windows::Forms::Label());
+			this->label11 = (gcnew System::Windows::Forms::Label());
+			this->checkBox1 = (gcnew System::Windows::Forms::CheckBox());
+			this->label12 = (gcnew System::Windows::Forms::Label());
+			this->checkBox2 = (gcnew System::Windows::Forms::CheckBox());
+			this->label13 = (gcnew System::Windows::Forms::Label());
+			this->pictureBox5 = (gcnew System::Windows::Forms::PictureBox());
+			this->imageList1 = (gcnew System::Windows::Forms::ImageList(this->components));
+			this->button6 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->BeginInit();
@@ -165,6 +180,7 @@ namespace IPZ {
 			this->menuStrip1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox4))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox5))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// button1
@@ -286,9 +302,11 @@ namespace IPZ {
 			// label4
 			// 
 			this->label4->AutoSize = true;
+			this->label4->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(238)));
 			this->label4->Location = System::Drawing::Point(880, 219);
 			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(144, 17);
+			this->label4->Size = System::Drawing::Size(162, 19);
 			this->label4->TabIndex = 14;
 			this->label4->Text = L"Obraz po progowaniu";
 			// 
@@ -398,47 +416,48 @@ namespace IPZ {
 			this->button4->Text = L"Zrób zdjêcie";
 			this->button4->UseVisualStyleBackColor = true;
 			// 
-			// radioButton1
-			// 
-			this->radioButton1->AutoSize = true;
-			this->radioButton1->Location = System::Drawing::Point(706, 82);
-			this->radioButton1->Name = L"radioButton1";
-			this->radioButton1->Size = System::Drawing::Size(110, 21);
-			this->radioButton1->TabIndex = 22;
-			this->radioButton1->TabStop = true;
-			this->radioButton1->Text = L"radioButton1";
-			this->radioButton1->UseVisualStyleBackColor = true;
-			// 
 			// numericUpDown1
 			// 
-			this->numericUpDown1->Location = System::Drawing::Point(909, 93);
+			this->numericUpDown1->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(238)));
+			this->numericUpDown1->Location = System::Drawing::Point(975, 82);
+			this->numericUpDown1->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 180, 0, 0, 0 });
+			this->numericUpDown1->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 180, 0, 0, System::Int32::MinValue });
 			this->numericUpDown1->Name = L"numericUpDown1";
-			this->numericUpDown1->Size = System::Drawing::Size(120, 22);
+			this->numericUpDown1->Size = System::Drawing::Size(120, 23);
 			this->numericUpDown1->TabIndex = 23;
 			// 
 			// comboBox1
 			// 
 			this->comboBox1->FormattingEnabled = true;
-			this->comboBox1->Location = System::Drawing::Point(728, 154);
+			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(4) {
+				L"Pole powierzchni", L"Obwód", L"D³ugoœæ krawêdzi",
+					L"Jakoœæ powierzchni"
+			});
+			this->comboBox1->Location = System::Drawing::Point(718, 166);
 			this->comboBox1->Name = L"comboBox1";
-			this->comboBox1->Size = System::Drawing::Size(121, 24);
+			this->comboBox1->Size = System::Drawing::Size(160, 24);
 			this->comboBox1->TabIndex = 24;
 			// 
 			// pictureBox4
 			// 
-			this->pictureBox4->Location = System::Drawing::Point(90, 651);
+			this->pictureBox4->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox4.Image")));
+			this->pictureBox4->Location = System::Drawing::Point(12, 555);
 			this->pictureBox4->Name = L"pictureBox4";
-			this->pictureBox4->Size = System::Drawing::Size(100, 50);
+			this->pictureBox4->Size = System::Drawing::Size(550, 250);
+			this->pictureBox4->SizeMode = System::Windows::Forms::PictureBoxSizeMode::CenterImage;
 			this->pictureBox4->TabIndex = 25;
 			this->pictureBox4->TabStop = false;
 			// 
 			// button5
 			// 
-			this->button5->Location = System::Drawing::Point(975, 138);
+			this->button5->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(238)));
+			this->button5->Location = System::Drawing::Point(975, 124);
 			this->button5->Name = L"button5";
-			this->button5->Size = System::Drawing::Size(75, 23);
+			this->button5->Size = System::Drawing::Size(120, 31);
 			this->button5->TabIndex = 26;
-			this->button5->Text = L"button5";
+			this->button5->Text = L"Przeœlij";
 			this->button5->UseVisualStyleBackColor = true;
 			this->button5->Click += gcnew System::EventHandler(this, &MyForm1::button5_Click);
 			// 
@@ -452,23 +471,114 @@ namespace IPZ {
 			// label10
 			// 
 			this->label10->AutoSize = true;
-			this->label10->Location = System::Drawing::Point(789, 185);
+			this->label10->Location = System::Drawing::Point(1062, 183);
 			this->label10->Name = L"label10";
 			this->label10->Size = System::Drawing::Size(54, 17);
 			this->label10->TabIndex = 27;
 			this->label10->Text = L"label10";
+			// 
+			// label11
+			// 
+			this->label11->AutoSize = true;
+			this->label11->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(238)));
+			this->label11->Location = System::Drawing::Point(952, 50);
+			this->label11->Name = L"label11";
+			this->label11->Size = System::Drawing::Size(195, 19);
+			this->label11->TabIndex = 28;
+			this->label11->Text = L"Obrót serwomechanizmem";
+			// 
+			// checkBox1
+			// 
+			this->checkBox1->AutoSize = true;
+			this->checkBox1->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(238)));
+			this->checkBox1->Location = System::Drawing::Point(718, 50);
+			this->checkBox1->Name = L"checkBox1";
+			this->checkBox1->Size = System::Drawing::Size(175, 23);
+			this->checkBox1->TabIndex = 29;
+			this->checkBox1->Text = L"Pod³¹czone Ardruino";
+			this->checkBox1->UseVisualStyleBackColor = true;
+			// 
+			// label12
+			// 
+			this->label12->AutoSize = true;
+			this->label12->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(238)));
+			this->label12->Location = System::Drawing::Point(663, 124);
+			this->label12->Name = L"label12";
+			this->label12->Size = System::Drawing::Size(271, 19);
+			this->label12->TabIndex = 30;
+			this->label12->Text = L"Wybierz jaki parametr chcesz mierzyæ:";
+			this->label12->Click += gcnew System::EventHandler(this, &MyForm1::label12_Click);
+			// 
+			// checkBox2
+			// 
+			this->checkBox2->AutoSize = true;
+			this->checkBox2->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(238)));
+			this->checkBox2->Location = System::Drawing::Point(718, 82);
+			this->checkBox2->Name = L"checkBox2";
+			this->checkBox2->Size = System::Drawing::Size(213, 23);
+			this->checkBox2->TabIndex = 31;
+			this->checkBox2->Text = L"W³¹cz/Wy³¹cz oœwietlenie";
+			this->checkBox2->UseVisualStyleBackColor = true;
+			// 
+			// label13
+			// 
+			this->label13->AutoSize = true;
+			this->label13->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(238)));
+			this->label13->Location = System::Drawing::Point(169, 533);
+			this->label13->Name = L"label13";
+			this->label13->Size = System::Drawing::Size(170, 19);
+			this->label13->TabIndex = 32;
+			this->label13->Text = L"Ostatnie zdjêcie detalu";
+			// 
+			// pictureBox5
+			// 
+			this->pictureBox5->BackColor = System::Drawing::Color::Transparent;
+			this->pictureBox5->Location = System::Drawing::Point(471, 771);
+			this->pictureBox5->Name = L"pictureBox5";
+			this->pictureBox5->Size = System::Drawing::Size(50, 50);
+			this->pictureBox5->SizeMode = System::Windows::Forms::PictureBoxSizeMode::CenterImage;
+			this->pictureBox5->TabIndex = 33;
+			this->pictureBox5->TabStop = false;
+			// 
+			// imageList1
+			// 
+			this->imageList1->ImageStream = (cli::safe_cast<System::Windows::Forms::ImageListStreamer^>(resources->GetObject(L"imageList1.ImageStream")));
+			this->imageList1->TransparentColor = System::Drawing::Color::White;
+			this->imageList1->Images->SetKeyName(0, L"pobrane.ico");
+			this->imageList1->Images->SetKeyName(1, L"maxresdefault-300x300.ico");
+			// 
+			// button6
+			// 
+			this->button6->Location = System::Drawing::Point(333, 842);
+			this->button6->Name = L"button6";
+			this->button6->Size = System::Drawing::Size(75, 23);
+			this->button6->TabIndex = 34;
+			this->button6->Text = L"button6";
+			this->button6->UseVisualStyleBackColor = true;
+			this->button6->Click += gcnew System::EventHandler(this, &MyForm1::button6_Click);
 			// 
 			// MyForm1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1272, 883);
+			this->Controls->Add(this->button6);
+			this->Controls->Add(this->pictureBox5);
+			this->Controls->Add(this->label13);
+			this->Controls->Add(this->checkBox2);
+			this->Controls->Add(this->label12);
+			this->Controls->Add(this->checkBox1);
+			this->Controls->Add(this->label11);
 			this->Controls->Add(this->label10);
 			this->Controls->Add(this->button5);
 			this->Controls->Add(this->pictureBox4);
 			this->Controls->Add(this->comboBox1);
 			this->Controls->Add(this->numericUpDown1);
-			this->Controls->Add(this->radioButton1);
 			this->Controls->Add(this->button4);
 			this->Controls->Add(this->label9);
 			this->Controls->Add(this->label8);
@@ -488,6 +598,7 @@ namespace IPZ {
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->menuStrip1);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->MainMenuStrip = this->menuStrip1;
 			this->MaximizeBox = false;
@@ -504,12 +615,14 @@ namespace IPZ {
 			this->menuStrip1->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox4))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox5))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
 public:int var;
+	   bool chceck_id = false;
 
 		void DrawCVImage(System::Windows::Forms::Control^ control, cv::Mat& colorImage){
 			System::Drawing::Graphics^ graphics = control->CreateGraphics();
@@ -530,7 +643,7 @@ public:int var;
 		void Image() {
 			
 			VideoCapture capture = VideoCapture(var); 
-			Mat frame, img, hsv_img,hsv,picture,picture_2,picture_3;
+			Mat frame,ing, img, hsv_img,hsv,picture,picture_2,picture_3;
 			vector<Mat> hsv_split;
 			capture >> frame;
 			
@@ -544,6 +657,7 @@ public:int var;
 					label8->Text = Convert::ToString(trackBar1->Value);
 					label9->Text = Convert::ToString(trackBar2->Value);
 					capture >> frame;
+					//flip(frame, ing, 0);
 					frame.copyTo(img);
 					cvtColor(img, picture_3, CV_RGB2GRAY);
 					cvtColor(img, hsv_img, CV_BGR2HSV);
@@ -614,6 +728,11 @@ private: System::Void menuZawansowaneToolStripMenuItem_Click(System::Object^  se
 	if (menuZawansowaneToolStripMenuItem->Checked == false) {
 		this->menuZawansowaneToolStripMenuItem->Checked = true;
 		this->Width = 1290;
+		if (xd == false) {
+			checkBox2->Enabled = false;
+			numericUpDown1->Enabled = false;
+			button5->Enabled = false;
+		}
 	}
 	else {
 		menuZawansowaneToolStripMenuItem->Checked = false;
@@ -623,6 +742,7 @@ private: System::Void menuZawansowaneToolStripMenuItem_Click(System::Object^  se
 
 private: System::Void button5_Click(System::Object^  sender, System::EventArgs^  e) {
 	bool fd = false;
+	int value = 0;
 	if (xd == true){
 		serialPort1->PortName = USB_name;
 		serialPort1->Open();
@@ -639,5 +759,19 @@ private: System::Void button5_Click(System::Object^  sender, System::EventArgs^ 
 private: System::Void serialPort1_DataReceived(System::Object^  sender, System::IO::Ports::SerialDataReceivedEventArgs^  e) {
 	this->znaczki = serialPort1->ReadLine();
 }
+private: System::Void label12_Click(System::Object^  sender, System::EventArgs^  e) {
+}
+private: System::Void button6_Click(System::Object^  sender, System::EventArgs^  e) {
+	if (chceck_id == false) {
+		pictureBox5->Image = imageList1->Images[0];
+		chceck_id = true;
+	}
+	else {
+		pictureBox5->Image = imageList1->Images[1];
+		chceck_id = false;
+	}
+
+}
+		
 };
 }
