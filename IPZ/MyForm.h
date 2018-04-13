@@ -3,6 +3,7 @@
 #include <iostream>
 #include "MyForm1.h"
 #include "Help_myform.h"
+#include "Sync.h"
 #include <fstream>
 #using <System.dll>
 
@@ -148,6 +149,7 @@ namespace IPZ {
 			this->nieWiemCoTuMo¿eBycToolStripMenuItem->Name = L"nieWiemCoTuMo¿eBycToolStripMenuItem";
 			this->nieWiemCoTuMo¿eBycToolStripMenuItem->Size = System::Drawing::Size(229, 26);
 			this->nieWiemCoTuMo¿eBycToolStripMenuItem->Text = L"&Synchronizacja rêczna";
+			this->nieWiemCoTuMo¿eBycToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::nieWiemCoTuMo¿eBycToolStripMenuItem_Click);
 			// 
 			// oProgramieToolStripMenuItem
 			// 
@@ -310,14 +312,14 @@ namespace IPZ {
 
 		}
 #pragma endregion
-		private: bool chceck = false;
+private: bool chceck = false;
 public:System::String^ dafug = "";
+
 
 	private: System::Void pomocToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 		Help_myform ^NoweOKno = gcnew Help_myform;
 		NoweOKno->Show();
 	}
-
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 	if (comboBox1->Text == "")
 		MessageBox::Show("Podaj aktywn¹ kamerkê, by przejœæ dalej", "Stwierdzenie na luzie ziomeczku", MessageBoxButtons::OK, MessageBoxIcon::Information);
@@ -342,11 +344,9 @@ private: System::Void zamknijToolStripMenuItem_Click(System::Object^  sender, Sy
 	if (MessageBox::Show("Czy na pewno chcesz zamkn¹æ program ?", "Pytanko na luzie", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes)
 		Application::Exit();
 }
-
 private: System::Void checkBox1_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
 }
 private: System::Void serialPort1_DataReceived(System::Object^  sender, System::IO::Ports::SerialDataReceivedEventArgs^  e) {
-	//if(serialPort1->IsOpen == true)
 	this->znak = serialPort1->ReadLine();
 }
 private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e) {
@@ -359,7 +359,7 @@ void chceck_USB(System::String ^nazwa_portu){
 				 System::String^ portName ="";
 				 for each (System::String^ s in SerialPort::GetPortNames())
 				 {
-					// MessageBox::Show(" {0}", s, MessageBoxButtons::OK);
+					//MessageBox::Show(" {0}", s, MessageBoxButtons::OK);
 					 portName = s;
 					 nazwa_portu = s;
 					 dafug = s;
@@ -422,6 +422,10 @@ private: System::Void button2_Click(System::Object^  sender, System::EventArgs^ 
 		chceck = false;
 		xyz = -1;
 	}
+}
+private: System::Void nieWiemCoTuMo¿eBycToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+	Sync^NoweOKno = gcnew Sync(xyz);
+	NoweOKno->Show();
 }
 };
 }

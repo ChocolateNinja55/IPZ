@@ -2,10 +2,13 @@
 #include <iostream>
 #include <Windows.h>
 #include <opencv2/opencv.hpp>
+#include <string.h>
 //#include <opencv2/imgcodecs.hpp>
 #include <opencv2/highgui/highgui.hpp> 
 #include "opencv2/imgproc/imgproc.hpp"
 #include "Help_myform.h"
+#include "Sync.h"
+#include <msclr\marshal_cppstd.h>
 
 namespace IPZ {
 
@@ -26,10 +29,10 @@ namespace IPZ {
 	/// </summary>
 	public ref class MyForm1 : public System::Windows::Forms::Form
 	{
-
 	public:System::String^ word;
-	public: int xd;
+	public: static int xd;
 	public: System::String^ USB_name;
+
 	private: System::Windows::Forms::Label^  label10;
 	private: System::Windows::Forms::Label^  label11;
 	private: System::Windows::Forms::CheckBox^  checkBox1;
@@ -39,6 +42,14 @@ namespace IPZ {
 	private: System::Windows::Forms::PictureBox^  pictureBox5;
 	private: System::Windows::Forms::ImageList^  imageList1;
 	private: System::Windows::Forms::Button^  button6;
+
+	private:
+
+	private: System::Windows::Forms::Button^  button7;
+	private: System::Windows::Forms::Label^  label14;
+	private: System::Windows::Forms::FolderBrowserDialog^  folderBrowserDialog1;
+	private: System::Windows::Forms::SaveFileDialog^  saveFileDialog1;
+
 	public:
 	public: System::String^ znaczki;
 
@@ -54,7 +65,18 @@ namespace IPZ {
 		{
 			InitializeComponent();
 			word = text;
-			xd = var;
+			xd = var; //spr czy jest po³¹czenie -1 brak, 1 jest 
+			USB_name = usb_name;
+			label8->Text = Convert::ToString(trackBar1->Value);
+			label9->Text = Convert::ToString(trackBar2->Value);
+			this->Width = 600;
+			//TODO: Add the constructor code here
+			//
+		}
+		MyForm1(System::String ^usb_name, int var)
+		{
+			InitializeComponent();
+			xd = var; //spr czy jest po³¹czenie -1 brak, 1 jest 
 			USB_name = usb_name;
 			label8->Text = Convert::ToString(trackBar1->Value);
 			label9->Text = Convert::ToString(trackBar2->Value);
@@ -172,6 +194,10 @@ namespace IPZ {
 			this->pictureBox5 = (gcnew System::Windows::Forms::PictureBox());
 			this->imageList1 = (gcnew System::Windows::Forms::ImageList(this->components));
 			this->button6 = (gcnew System::Windows::Forms::Button());
+			this->button7 = (gcnew System::Windows::Forms::Button());
+			this->label14 = (gcnew System::Windows::Forms::Label());
+			this->folderBrowserDialog1 = (gcnew System::Windows::Forms::FolderBrowserDialog());
+			this->saveFileDialog1 = (gcnew System::Windows::Forms::SaveFileDialog());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->BeginInit();
@@ -242,7 +268,7 @@ namespace IPZ {
 			// pictureBox2
 			// 
 			this->pictureBox2->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
-			this->pictureBox2->Location = System::Drawing::Point(706, 544);
+			this->pictureBox2->Location = System::Drawing::Point(706, 596);
 			this->pictureBox2->Name = L"pictureBox2";
 			this->pictureBox2->Size = System::Drawing::Size(550, 250);
 			this->pictureBox2->TabIndex = 7;
@@ -252,7 +278,7 @@ namespace IPZ {
 			// pictureBox3
 			// 
 			this->pictureBox3->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
-			this->pictureBox3->Location = System::Drawing::Point(706, 255);
+			this->pictureBox3->Location = System::Drawing::Point(706, 292);
 			this->pictureBox3->Name = L"pictureBox3";
 			this->pictureBox3->Size = System::Drawing::Size(550, 250);
 			this->pictureBox3->TabIndex = 8;
@@ -304,7 +330,7 @@ namespace IPZ {
 			this->label4->AutoSize = true;
 			this->label4->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
-			this->label4->Location = System::Drawing::Point(880, 219);
+			this->label4->Location = System::Drawing::Point(899, 254);
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(162, 19);
 			this->label4->TabIndex = 14;
@@ -313,7 +339,7 @@ namespace IPZ {
 			// label5
 			// 
 			this->label5->AutoSize = true;
-			this->label5->Location = System::Drawing::Point(786, 512);
+			this->label5->Location = System::Drawing::Point(786, 555);
 			this->label5->Name = L"label5";
 			this->label5->Size = System::Drawing::Size(309, 17);
 			this->label5->TabIndex = 15;
@@ -415,12 +441,13 @@ namespace IPZ {
 			this->button4->TabIndex = 21;
 			this->button4->Text = L"Zrób zdjêcie";
 			this->button4->UseVisualStyleBackColor = true;
+			this->button4->Click += gcnew System::EventHandler(this, &MyForm1::button4_Click);
 			// 
 			// numericUpDown1
 			// 
 			this->numericUpDown1->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
-			this->numericUpDown1->Location = System::Drawing::Point(975, 82);
+			this->numericUpDown1->Location = System::Drawing::Point(1099, 82);
 			this->numericUpDown1->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 180, 0, 0, 0 });
 			this->numericUpDown1->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 180, 0, 0, System::Int32::MinValue });
 			this->numericUpDown1->Name = L"numericUpDown1";
@@ -434,7 +461,7 @@ namespace IPZ {
 				L"Pole powierzchni", L"Obwód", L"D³ugoœæ krawêdzi",
 					L"Jakoœæ powierzchni"
 			});
-			this->comboBox1->Location = System::Drawing::Point(718, 166);
+			this->comboBox1->Location = System::Drawing::Point(706, 233);
 			this->comboBox1->Name = L"comboBox1";
 			this->comboBox1->Size = System::Drawing::Size(160, 24);
 			this->comboBox1->TabIndex = 24;
@@ -453,7 +480,7 @@ namespace IPZ {
 			// 
 			this->button5->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
-			this->button5->Location = System::Drawing::Point(975, 124);
+			this->button5->Location = System::Drawing::Point(1108, 233);
 			this->button5->Name = L"button5";
 			this->button5->Size = System::Drawing::Size(120, 31);
 			this->button5->TabIndex = 26;
@@ -471,7 +498,7 @@ namespace IPZ {
 			// label10
 			// 
 			this->label10->AutoSize = true;
-			this->label10->Location = System::Drawing::Point(1062, 183);
+			this->label10->Location = System::Drawing::Point(1148, 194);
 			this->label10->Name = L"label10";
 			this->label10->Size = System::Drawing::Size(54, 17);
 			this->label10->TabIndex = 27;
@@ -482,7 +509,7 @@ namespace IPZ {
 			this->label11->AutoSize = true;
 			this->label11->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
-			this->label11->Location = System::Drawing::Point(952, 50);
+			this->label11->Location = System::Drawing::Point(1024, 50);
 			this->label11->Name = L"label11";
 			this->label11->Size = System::Drawing::Size(195, 19);
 			this->label11->TabIndex = 28;
@@ -505,7 +532,7 @@ namespace IPZ {
 			this->label12->AutoSize = true;
 			this->label12->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
-			this->label12->Location = System::Drawing::Point(663, 124);
+			this->label12->Location = System::Drawing::Point(673, 194);
 			this->label12->Name = L"label12";
 			this->label12->Size = System::Drawing::Size(271, 19);
 			this->label12->TabIndex = 30;
@@ -538,7 +565,7 @@ namespace IPZ {
 			// pictureBox5
 			// 
 			this->pictureBox5->BackColor = System::Drawing::Color::Transparent;
-			this->pictureBox5->Location = System::Drawing::Point(471, 771);
+			this->pictureBox5->Location = System::Drawing::Point(512, 755);
 			this->pictureBox5->Name = L"pictureBox5";
 			this->pictureBox5->Size = System::Drawing::Size(50, 50);
 			this->pictureBox5->SizeMode = System::Windows::Forms::PictureBoxSizeMode::CenterImage;
@@ -554,7 +581,7 @@ namespace IPZ {
 			// 
 			// button6
 			// 
-			this->button6->Location = System::Drawing::Point(333, 842);
+			this->button6->Location = System::Drawing::Point(487, 848);
 			this->button6->Name = L"button6";
 			this->button6->Size = System::Drawing::Size(75, 23);
 			this->button6->TabIndex = 34;
@@ -562,11 +589,43 @@ namespace IPZ {
 			this->button6->UseVisualStyleBackColor = true;
 			this->button6->Click += gcnew System::EventHandler(this, &MyForm1::button6_Click);
 			// 
+			// button7
+			// 
+			this->button7->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(238)));
+			this->button7->Location = System::Drawing::Point(718, 126);
+			this->button7->Name = L"button7";
+			this->button7->Size = System::Drawing::Size(123, 54);
+			this->button7->TabIndex = 35;
+			this->button7->Text = L"Wybierz folder zapisu\r\n";
+			this->button7->UseVisualStyleBackColor = true;
+			this->button7->Click += gcnew System::EventHandler(this, &MyForm1::button7_Click);
+			// 
+			// label14
+			// 
+			this->label14->AutoSize = true;
+			this->label14->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Underline, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(238)));
+			this->label14->ForeColor = System::Drawing::Color::Red;
+			this->label14->Location = System::Drawing::Point(868, 145);
+			this->label14->Name = L"label14";
+			this->label14->Size = System::Drawing::Size(193, 19);
+			this->label14->TabIndex = 36;
+			this->label14->Text = L"Brak wybranej œcie¿ki pliku!";
+			// 
+			// saveFileDialog1
+			// 
+			this->saveFileDialog1->DefaultExt = L"Protokó³";
+			this->saveFileDialog1->FileName = L"Protokó³";
+			this->saveFileDialog1->Filter = L"Pliki .jpg (*.jpg)|*.jpg|Wszytskie pliki (*.*)|*.*";
+			// 
 			// MyForm1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1272, 883);
+			this->Controls->Add(this->label14);
+			this->Controls->Add(this->button7);
 			this->Controls->Add(this->button6);
 			this->Controls->Add(this->pictureBox5);
 			this->Controls->Add(this->label13);
@@ -622,7 +681,8 @@ namespace IPZ {
 		}
 #pragma endregion
 public:int var;
-	   bool chceck_id = false;
+bool chceck_id = false;
+bool id_photo = false;
 
 		void DrawCVImage(System::Windows::Forms::Control^ control, cv::Mat& colorImage){
 			System::Drawing::Graphics^ graphics = control->CreateGraphics();
@@ -641,9 +701,9 @@ public:int var;
 			delete graphics;
 		}
 		void Image() {
-			
+			id_photo = true;
 			VideoCapture capture = VideoCapture(var); 
-			Mat frame,ing, img, hsv_img,hsv,picture,picture_2,picture_3;
+			Mat frame, ing, img, hsv_img,hsv,picture,picture_2,picture_3;
 			vector<Mat> hsv_split;
 			capture >> frame;
 			
@@ -657,16 +717,13 @@ public:int var;
 					label8->Text = Convert::ToString(trackBar1->Value);
 					label9->Text = Convert::ToString(trackBar2->Value);
 					capture >> frame;
-					//flip(frame, ing, 0);
 					frame.copyTo(img);
 					cvtColor(img, picture_3, CV_RGB2GRAY);
 					cvtColor(img, hsv_img, CV_BGR2HSV);
 					split(hsv_img, hsv_split);
 					int x = 100;
 					int y = 150;
-					//mask = cv2.inRange(hsv, x,y)
 					inRange(hsv_split[0], x, y, picture);
-					//inRange(hsv_split[1], x, y, dwa);
 					inRange(picture_3, trackBar1->Value, trackBar2->Value, picture_2);
 					DrawCVImage(pictureBox1, frame);
 					DrawCVImage1(pictureBox2, picture);
@@ -674,7 +731,7 @@ public:int var;
 					if (!DoEvents())
 						break;
 				}
-				capture.release();
+				capture.release();	
 		}
 		bool DoEvents()
 		{
@@ -706,7 +763,6 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 	Application::Exit();
 }
 private: System::Void MyForm1_Load(System::Object^  sender, System::EventArgs^  e) {
-
 	if (word == "Kamera w laptopie")
 		var = 0;
 	else if (word == "Kamera USB")
@@ -721,14 +777,15 @@ private: System::Void pomocToolStripMenuItem_Click(System::Object^  sender, Syst
 	NoweOKno->Show();
 }
 private: System::Void synchronizacjaToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
-
+	Sync ^NoweOKno = gcnew Sync(xd);
+	NoweOKno->Show();
 }
 private: System::Void menuZawansowaneToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 	
 	if (menuZawansowaneToolStripMenuItem->Checked == false) {
 		this->menuZawansowaneToolStripMenuItem->Checked = true;
 		this->Width = 1290;
-		if (xd == false) {
+		if ((xd == -1)||(xd == 0)) {
 			checkBox2->Enabled = false;
 			numericUpDown1->Enabled = false;
 			button5->Enabled = false;
@@ -739,21 +796,29 @@ private: System::Void menuZawansowaneToolStripMenuItem_Click(System::Object^  se
 		this->Width = 600;
 	}
 }
-
 private: System::Void button5_Click(System::Object^  sender, System::EventArgs^  e) {
 	bool fd = false;
 	int value = 0;
-	if (xd == true){
+
+	if (xd == 1){
 		serialPort1->PortName = USB_name;
 		serialPort1->Open();
 
 		if ((serialPort1->IsOpen == true)&&(fd == false))
 		{
 			serialPort1->WriteLine("A");
+			serialPort1->WriteLine(Convert::ToString(numericUpDown1->Value));
+			//do zrobienia komunikacja z ardruino by zczytywa³ wartoœci liczbowe
 			label10->Text = znaczki;
 			fd = true;
 		}
 		fd = false;
+	}
+	else {
+		if (MessageBox::Show("Brak pod³¹czonego ardruino! Czy chcesz siê po³¹czyæ ponownie?", "Pytanie na luzie", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes){
+			Sync ^NoweOKno = gcnew Sync(xd);
+			NoweOKno->Show();
+		}
 	}
 }
 private: System::Void serialPort1_DataReceived(System::Object^  sender, System::IO::Ports::SerialDataReceivedEventArgs^  e) {
@@ -770,8 +835,40 @@ private: System::Void button6_Click(System::Object^  sender, System::EventArgs^ 
 		pictureBox5->Image = imageList1->Images[1];
 		chceck_id = false;
 	}
-
 }
 		
+private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) {
+	int i = 0;
+	string path1;
+	
+	VideoCapture capture1 = VideoCapture(var);
+	Mat frame, photo;
+	capture1 >> frame;
+
+	vector<int> compression_params;
+	compression_params.push_back(IMWRITE_PNG_COMPRESSION);
+	compression_params.push_back(1);
+	while (waitKey(20) != 27)
+	{
+		capture1 >> frame;
+		frame.copyTo(photo);
+		System::String^ managed = "test";
+		managed = folderBrowserDialog1->SelectedPath;
+		managed += "\\protokó³.jpg";
+		string path1 = msclr::interop::marshal_as<std::string>(managed);
+		imwrite(path1,photo, compression_params);
+		i++;
+		if (i == 1)
+			break;
+	}
+	capture1.release();
+	if(id_photo == true)
+	Image();
+}
+private: System::Void button7_Click(System::Object^  sender, System::EventArgs^  e) {
+	folderBrowserDialog1->ShowDialog();
+	if (folderBrowserDialog1->SelectedPath != "")
+		label14->Text = folderBrowserDialog1->SelectedPath;
+}
 };
 }
