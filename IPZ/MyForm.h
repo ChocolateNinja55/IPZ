@@ -373,21 +373,6 @@ void chceck_USB(System::String ^nazwa_portu){
 					serialPort1->Open();
 				 }
 		 }
-void funkcja(int x)
-		{	
-			switch (x)
-			{
-				case 1:
-					serialPort1->WriteLine("A");
-					break;
-				case 2:
-					serialPort1->WriteLine("B");
-					break;
-				case 3:
-					serialPort1->WriteLine("C");
-					break;
-			}
-}
 private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
 	if (chceck == false) {
 			if (serialPort1->IsOpen == false)
@@ -407,6 +392,23 @@ private: System::Void button2_Click(System::Object^  sender, System::EventArgs^ 
 				chceck = true;
 				xyz = 1;
 				serialPort1->Close();
+			}
+			else if ((znak != "Siemandero") && (znak != "")) {
+				if (serialPort1->IsOpen == true) {
+					this->serialPort1->ReadTimeout = 500;
+					this->znak = serialPort1->ReadLine();
+					if (znak == "Siemandero") {
+						label3->Text = "Pod³¹czony";
+						pictureBox1->Image = imageList1->Images[1];
+						chceck = true;
+						xyz = 1;
+						serialPort1->Close();
+					}
+
+				}
+				else
+					this->serialPort1->ReadTimeout = 300;
+				label4->Text = znak;
 			}
 			else {
 				MessageBox::Show("SprawdŸ po³¹czenie pomiêdzy Ardruino a USB", "B³¹d na luzie ziomeczku", MessageBoxButtons::OK, MessageBoxIcon::Error);

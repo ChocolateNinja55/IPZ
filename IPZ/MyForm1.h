@@ -48,7 +48,8 @@ namespace IPZ {
 	private: System::Windows::Forms::Button^  button7;
 	private: System::Windows::Forms::Label^  label14;
 	private: System::Windows::Forms::FolderBrowserDialog^  folderBrowserDialog1;
-	private: System::Windows::Forms::SaveFileDialog^  saveFileDialog1;
+
+	private: System::Windows::Forms::Label^  label15;
 
 	public:
 	public: System::String^ znaczki;
@@ -197,7 +198,7 @@ namespace IPZ {
 			this->button7 = (gcnew System::Windows::Forms::Button());
 			this->label14 = (gcnew System::Windows::Forms::Label());
 			this->folderBrowserDialog1 = (gcnew System::Windows::Forms::FolderBrowserDialog());
-			this->saveFileDialog1 = (gcnew System::Windows::Forms::SaveFileDialog());
+			this->label15 = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->BeginInit();
@@ -550,6 +551,7 @@ namespace IPZ {
 			this->checkBox2->TabIndex = 31;
 			this->checkBox2->Text = L"W³¹cz/Wy³¹cz oœwietlenie";
 			this->checkBox2->UseVisualStyleBackColor = true;
+			this->checkBox2->CheckedChanged += gcnew System::EventHandler(this, &MyForm1::checkBox2_CheckedChanged);
 			// 
 			// label13
 			// 
@@ -571,6 +573,8 @@ namespace IPZ {
 			this->pictureBox5->SizeMode = System::Windows::Forms::PictureBoxSizeMode::CenterImage;
 			this->pictureBox5->TabIndex = 33;
 			this->pictureBox5->TabStop = false;
+			this->pictureBox5->Visible = false;
+			this->pictureBox5->WaitOnLoad = true;
 			// 
 			// imageList1
 			// 
@@ -604,26 +608,37 @@ namespace IPZ {
 			// label14
 			// 
 			this->label14->AutoSize = true;
-			this->label14->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Underline, System::Drawing::GraphicsUnit::Point,
+			this->label14->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
 			this->label14->ForeColor = System::Drawing::Color::Red;
 			this->label14->Location = System::Drawing::Point(868, 145);
 			this->label14->Name = L"label14";
-			this->label14->Size = System::Drawing::Size(193, 19);
+			this->label14->Size = System::Drawing::Size(361, 19);
 			this->label14->TabIndex = 36;
-			this->label14->Text = L"Brak wybranej œcie¿ki pliku!";
+			this->label14->Text = L"D:\\Studia\\Semestr 6\\IPZ P\\IPZ\\IPZ\\Obrazy zapisane";
 			// 
-			// saveFileDialog1
+			// folderBrowserDialog1
 			// 
-			this->saveFileDialog1->DefaultExt = L"Protokó³";
-			this->saveFileDialog1->FileName = L"Protokó³";
-			this->saveFileDialog1->Filter = L"Pliki .jpg (*.jpg)|*.jpg|Wszytskie pliki (*.*)|*.*";
+			this->folderBrowserDialog1->SelectedPath = L"D:\\Studia\\Semestr 6\\IPZ P\\IPZ\\IPZ\\Obrazy zapisane";
+			// 
+			// label15
+			// 
+			this->label15->AutoSize = true;
+			this->label15->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, static_cast<System::Drawing::FontStyle>((System::Drawing::FontStyle::Bold | System::Drawing::FontStyle::Underline)),
+				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(238)));
+			this->label15->ForeColor = System::Drawing::Color::Red;
+			this->label15->Location = System::Drawing::Point(899, 126);
+			this->label15->Name = L"label15";
+			this->label15->Size = System::Drawing::Size(134, 17);
+			this->label15->TabIndex = 37;
+			this->label15->Text = L"Œcie¿ka domyœlna:";
 			// 
 			// MyForm1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1272, 883);
+			this->Controls->Add(this->label15);
 			this->Controls->Add(this->label14);
 			this->Controls->Add(this->button7);
 			this->Controls->Add(this->button6);
@@ -790,6 +805,10 @@ private: System::Void menuZawansowaneToolStripMenuItem_Click(System::Object^  se
 			numericUpDown1->Enabled = false;
 			button5->Enabled = false;
 		}
+		else {
+			checkBox1->Checked = true;
+			checkBox1->Enabled = false;
+		}
 	}
 	else {
 		menuZawansowaneToolStripMenuItem->Checked = false;
@@ -801,8 +820,10 @@ private: System::Void button5_Click(System::Object^  sender, System::EventArgs^ 
 	int value = 0;
 
 	if (xd == 1){
-		serialPort1->PortName = USB_name;
-		serialPort1->Open();
+		if (serialPort1->PortName != USB_name)
+			serialPort1->PortName = USB_name;
+		if (serialPort1->IsOpen == false)
+			serialPort1->Open();
 
 		if ((serialPort1->IsOpen == true)&&(fd == false))
 		{
@@ -827,6 +848,7 @@ private: System::Void serialPort1_DataReceived(System::Object^  sender, System::
 private: System::Void label12_Click(System::Object^  sender, System::EventArgs^  e) {
 }
 private: System::Void button6_Click(System::Object^  sender, System::EventArgs^  e) {
+	pictureBox5->Visible = true;
 	if (chceck_id == false) {
 		pictureBox5->Image = imageList1->Images[0];
 		chceck_id = true;
@@ -842,7 +864,7 @@ private: System::Void button4_Click(System::Object^  sender, System::EventArgs^ 
 	string path1;
 	
 	VideoCapture capture1 = VideoCapture(var);
-	Mat frame, photo;
+	Mat frame, photo, pic1,pic2;
 	capture1 >> frame;
 
 	vector<int> compression_params;
@@ -852,11 +874,18 @@ private: System::Void button4_Click(System::Object^  sender, System::EventArgs^ 
 	{
 		capture1 >> frame;
 		frame.copyTo(photo);
+		//dla progowania
+		cvtColor(photo, pic1, CV_RGB2GRAY);
+		inRange(pic1, trackBar1->Value, trackBar2->Value, pic2);
+		//DrawCVImage(pictureBox4, photo); 
+		DrawCVImage1(pictureBox4, pic2);
+
 		System::String^ managed = "test";
 		managed = folderBrowserDialog1->SelectedPath;
 		managed += "\\protokó³.jpg";
 		string path1 = msclr::interop::marshal_as<std::string>(managed);
-		imwrite(path1,photo, compression_params);
+		//imwrite(path1,photo, compression_params);
+		imwrite(path1, pic2, compression_params);
 		i++;
 		if (i == 1)
 			break;
@@ -867,8 +896,23 @@ private: System::Void button4_Click(System::Object^  sender, System::EventArgs^ 
 }
 private: System::Void button7_Click(System::Object^  sender, System::EventArgs^  e) {
 	folderBrowserDialog1->ShowDialog();
-	if (folderBrowserDialog1->SelectedPath != "")
+	if (folderBrowserDialog1->SelectedPath != "D:\Studia\Semestr 6\IPZ P\IPZ\IPZ\Obrazy zapisane")
 		label14->Text = folderBrowserDialog1->SelectedPath;
+		label15->Visible = false;
+		label14 ->ForeColor = System::Drawing::SystemColors::ControlText;
+
+}
+private: System::Void checkBox2_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
+	if (xd == 1) {
+		if(serialPort1->PortName != USB_name)
+		serialPort1->PortName = USB_name;
+		if(serialPort1->IsOpen == false)
+		serialPort1->Open();
+	}
+	if ((serialPort1->IsOpen == true) && (checkBox2->Checked == true))
+		serialPort1->WriteLine("B");
+	else
+		serialPort1->WriteLine("C");
 }
 };
 }

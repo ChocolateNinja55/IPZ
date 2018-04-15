@@ -22,6 +22,8 @@ namespace IPZ {
 	public:System::String ^Port_name = "COM1";
 	private: System::Windows::Forms::Label^  label4;
 	public: int spr1 = 0;
+	private: System::Windows::Forms::Button^  button3;
+	public:
 	public: int xddd = 0; // zmienna pokazuj¹ca czy otwarto po³¹czenie
 
 	public:
@@ -107,6 +109,7 @@ namespace IPZ {
 			this->checkBox1 = (gcnew System::Windows::Forms::CheckBox());
 			this->checkBox2 = (gcnew System::Windows::Forms::CheckBox());
 			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->button3 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -115,9 +118,9 @@ namespace IPZ {
 			this->comboBox1->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
 			this->comboBox1->FormattingEnabled = true;
-			this->comboBox1->Location = System::Drawing::Point(357, 142);
+			this->comboBox1->Location = System::Drawing::Point(327, 142);
 			this->comboBox1->Name = L"comboBox1";
-			this->comboBox1->Size = System::Drawing::Size(121, 25);
+			this->comboBox1->Size = System::Drawing::Size(220, 25);
 			this->comboBox1->TabIndex = 0;
 			// 
 			// button1
@@ -236,11 +239,24 @@ namespace IPZ {
 			this->label4->TabIndex = 9;
 			this->label4->Text = L"label4";
 			// 
+			// button3
+			// 
+			this->button3->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(238)));
+			this->button3->Location = System::Drawing::Point(457, 183);
+			this->button3->Name = L"button3";
+			this->button3->Size = System::Drawing::Size(89, 33);
+			this->button3->TabIndex = 10;
+			this->button3->Text = L"Odœwie¿";
+			this->button3->UseVisualStyleBackColor = true;
+			this->button3->Click += gcnew System::EventHandler(this, &Sync::button3_Click);
+			// 
 			// Sync
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(583, 372);
+			this->Controls->Add(this->button3);
 			this->Controls->Add(this->label4);
 			this->Controls->Add(this->checkBox2);
 			this->Controls->Add(this->checkBox1);
@@ -266,6 +282,7 @@ namespace IPZ {
 		}
 #pragma endregion
 		bool chceckk = false;
+		bool brak = false;
 private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
 	//MyForm1 ^update = gcnew MyForm1(Port_name, xddd);
 	//update->Show();
@@ -293,6 +310,10 @@ private: System::Void Sync_Load(System::Object^  sender, System::EventArgs^  e) 
 					 return;
 				 else
 					 serialPort1->Open();
+			 }
+			 else {
+				 comboBox1->Items->Add("Brak dostêpnego portu COM");
+				 brak = true;
 			 }
 		 }
 private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -334,12 +355,24 @@ private: System::Void checkBox2_Click(System::Object^  sender, System::EventArgs
 	checkBox1->Checked = false;
 	checkBox2->Checked = true;
 	comboBox1->Enabled = false;
+	button3->Enabled = false;
 }
 private: System::Void checkBox1_Click(System::Object^  sender, System::EventArgs^  e) {
 	checkBox1->Checked = true;
 	checkBox2->Checked = false;
 	comboBox1->Enabled = true;
 	chceck_USB(reply);
+	if (brak == true)
+		brak = false;
+
+}
+private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
+	chceck_USB(reply);
+	if (brak == false) {
+		comboBox1->Text = "";
+		//comboBox1->Items->Remove(0);
+	}
+	
 }
 };
 }

@@ -6,6 +6,7 @@ boolean zm = false;
 int i =10;
 
 void setup(){
+  pinMode(8, OUTPUT);
   Serial.begin(9600);
   while(!Serial)
   {
@@ -33,12 +34,13 @@ void loop(){
   case 'B':
     Serial.print("no dziala\n");
     delay(500);
+    digitalWrite(8, HIGH);
     znak = 0;
     break;
     
   case 'C':
-  Serial.print("Jakas liczba: ");
-  Serial.println(i);
+  Serial.print("Jakas liczba:11\n");
+  digitalWrite(8,LOW);
   delay(500);
   znak = 0;
   break;
