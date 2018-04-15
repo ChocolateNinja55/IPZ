@@ -389,6 +389,7 @@ private: System::Void button2_Click(System::Object^  sender, System::EventArgs^ 
 			if (znak == "Siemandero") {
 				label3->Text = "Pod³¹czony";
 				pictureBox1->Image = imageList1->Images[1];
+				serialPort1->WriteLine("X");
 				chceck = true;
 				xyz = 1;
 				serialPort1->Close();
@@ -400,6 +401,7 @@ private: System::Void button2_Click(System::Object^  sender, System::EventArgs^ 
 					if (znak == "Siemandero") {
 						label3->Text = "Pod³¹czony";
 						pictureBox1->Image = imageList1->Images[1];
+						serialPort1->WriteLine("X");
 						chceck = true;
 						xyz = 1;
 						serialPort1->Close();

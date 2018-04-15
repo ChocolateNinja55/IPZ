@@ -332,6 +332,7 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 			if (reply == "Siemandero") {
 				label3->Text = "Pod³¹czony";
 				pictureBox1->Image = imageList1->Images[1];
+				serialPort1->WriteLine("X");
 				chceckk = true;
 				xddd = 1;
 				//serialPort1->Close();

@@ -1,9 +1,10 @@
+String readString;
 #include <Servo.h>
 Servo serwomechanizm;
-String ciag;
+
 char znak =0;
+char c_liczba =10;
 boolean zm = false;
-int i =10;
 
 void setup(){
   pinMode(8, OUTPUT);
@@ -14,11 +15,12 @@ void setup(){
   }
   nawiazkom();
   serwomechanizm.attach(11);
+  //serwomechanizm.write(0);
 }
 void loop(){
   if(Serial.available()>0){
     znak = Serial.read();
-    //ciag +=znak;
+    delay(2);
  }
   switch(znak){
   case 'A':
@@ -26,8 +28,6 @@ void loop(){
     delay(500);
     serwomechanizm.write(45);
     delay(500);
-    //serwomechanizm.write(45);
-    //serwomechanizm.write(-45);
     znak = 0;
   break;
   
@@ -43,6 +43,26 @@ void loop(){
   digitalWrite(8,LOW);
   delay(500);
   znak = 0;
+  break;
+  
+  case 'D':
+  Serial.print("JP\n");
+  znak = 0;
+  delay(500);
+  while(Serial.available()){
+    delay(2000);
+    c_liczba = Serial.read();
+    readString += c_liczba;
+    delay(2);
+  }
+  if (readString.length() >0) {
+    Serial.println(readString);
+    int i_liczba = readString.toInt();
+    serwomechanizm.write(i_liczba);
+  delay(500);
+  readString ="";
+  break;
+  }
   break;
   }
   nawiazkom();

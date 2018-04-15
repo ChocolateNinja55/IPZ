@@ -450,7 +450,6 @@ namespace IPZ {
 				static_cast<System::Byte>(238)));
 			this->numericUpDown1->Location = System::Drawing::Point(1099, 82);
 			this->numericUpDown1->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 180, 0, 0, 0 });
-			this->numericUpDown1->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 180, 0, 0, System::Int32::MinValue });
 			this->numericUpDown1->Name = L"numericUpDown1";
 			this->numericUpDown1->Size = System::Drawing::Size(120, 23);
 			this->numericUpDown1->TabIndex = 23;
@@ -827,7 +826,7 @@ private: System::Void button5_Click(System::Object^  sender, System::EventArgs^ 
 
 		if ((serialPort1->IsOpen == true)&&(fd == false))
 		{
-			serialPort1->WriteLine("A");
+			serialPort1->WriteLine("D");
 			serialPort1->WriteLine(Convert::ToString(numericUpDown1->Value));
 			//do zrobienia komunikacja z ardruino by zczytywa³ wartoœci liczbowe
 			label10->Text = znaczki;
