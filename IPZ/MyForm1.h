@@ -9,6 +9,7 @@
 #include "Help_myform.h"
 #include "Sync.h"
 #include <msclr\marshal_cppstd.h>
+#include <fstream>
 
 namespace IPZ {
 
@@ -33,7 +34,7 @@ namespace IPZ {
 	public: static int xd;
 	public: System::String^ USB_name;
 
-	private: System::Windows::Forms::Label^  label10;
+
 	private: System::Windows::Forms::Label^  label11;
 	private: System::Windows::Forms::CheckBox^  checkBox1;
 	private: System::Windows::Forms::Label^  label12;
@@ -50,6 +51,12 @@ namespace IPZ {
 	private: System::Windows::Forms::FolderBrowserDialog^  folderBrowserDialog1;
 
 	private: System::Windows::Forms::Label^  label15;
+	private: System::Windows::Forms::ComboBox^  comboBox2;
+	private: System::Windows::Forms::Label^  label10;
+	private: System::Windows::Forms::Button^  button8;
+	private: System::Windows::Forms::SaveFileDialog^  saveFileDialog1;
+
+
 
 	public:
 	public: System::String^ znaczki;
@@ -62,7 +69,7 @@ namespace IPZ {
 			//TODO: Add the constructor code here
 			//
 		}
-		MyForm1(System::String^ text,System::String ^usb_name,int var) 
+		MyForm1(System::String^ text, System::String ^usb_name, int var)
 		{
 			InitializeComponent();
 			word = text;
@@ -95,7 +102,7 @@ namespace IPZ {
 			{
 				delete components;
 			}
-		
+
 		}
 	private: System::Windows::Forms::Button^  button1;
 
@@ -186,7 +193,6 @@ namespace IPZ {
 			this->pictureBox4 = (gcnew System::Windows::Forms::PictureBox());
 			this->button5 = (gcnew System::Windows::Forms::Button());
 			this->serialPort1 = (gcnew System::IO::Ports::SerialPort(this->components));
-			this->label10 = (gcnew System::Windows::Forms::Label());
 			this->label11 = (gcnew System::Windows::Forms::Label());
 			this->checkBox1 = (gcnew System::Windows::Forms::CheckBox());
 			this->label12 = (gcnew System::Windows::Forms::Label());
@@ -199,6 +205,10 @@ namespace IPZ {
 			this->label14 = (gcnew System::Windows::Forms::Label());
 			this->folderBrowserDialog1 = (gcnew System::Windows::Forms::FolderBrowserDialog());
 			this->label15 = (gcnew System::Windows::Forms::Label());
+			this->comboBox2 = (gcnew System::Windows::Forms::ComboBox());
+			this->label10 = (gcnew System::Windows::Forms::Label());
+			this->button8 = (gcnew System::Windows::Forms::Button());
+			this->saveFileDialog1 = (gcnew System::Windows::Forms::SaveFileDialog());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->BeginInit();
@@ -480,7 +490,7 @@ namespace IPZ {
 			// 
 			this->button5->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
-			this->button5->Location = System::Drawing::Point(1108, 233);
+			this->button5->Location = System::Drawing::Point(1099, 112);
 			this->button5->Name = L"button5";
 			this->button5->Size = System::Drawing::Size(120, 31);
 			this->button5->TabIndex = 26;
@@ -495,21 +505,12 @@ namespace IPZ {
 			this->serialPort1->WriteTimeout = 300;
 			this->serialPort1->DataReceived += gcnew System::IO::Ports::SerialDataReceivedEventHandler(this, &MyForm1::serialPort1_DataReceived);
 			// 
-			// label10
-			// 
-			this->label10->AutoSize = true;
-			this->label10->Location = System::Drawing::Point(1148, 194);
-			this->label10->Name = L"label10";
-			this->label10->Size = System::Drawing::Size(54, 17);
-			this->label10->TabIndex = 27;
-			this->label10->Text = L"label10";
-			// 
 			// label11
 			// 
 			this->label11->AutoSize = true;
 			this->label11->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
-			this->label11->Location = System::Drawing::Point(1024, 50);
+			this->label11->Location = System::Drawing::Point(1061, 50);
 			this->label11->Name = L"label11";
 			this->label11->Size = System::Drawing::Size(195, 19);
 			this->label11->TabIndex = 28;
@@ -557,7 +558,7 @@ namespace IPZ {
 			this->label13->AutoSize = true;
 			this->label13->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
-			this->label13->Location = System::Drawing::Point(169, 533);
+			this->label13->Location = System::Drawing::Point(179, 808);
 			this->label13->Name = L"label13";
 			this->label13->Size = System::Drawing::Size(170, 19);
 			this->label13->TabIndex = 32;
@@ -632,11 +633,55 @@ namespace IPZ {
 			this->label15->TabIndex = 37;
 			this->label15->Text = L"Œcie¿ka domyœlna:";
 			// 
+			// comboBox2
+			// 
+			this->comboBox2->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(238)));
+			this->comboBox2->FormattingEnabled = true;
+			this->comboBox2->Items->AddRange(gcnew cli::array< System::Object^  >(5) {
+				L"Obraz normalny", L"Obraz progowany", L"Obraz HSV",
+					L"Obraz normalny + progowany", L"Obraz normalny + progowany + HSV"
+			});
+			this->comboBox2->Location = System::Drawing::Point(266, 523);
+			this->comboBox2->Name = L"comboBox2";
+			this->comboBox2->Size = System::Drawing::Size(271, 25);
+			this->comboBox2->TabIndex = 38;
+			// 
+			// label10
+			// 
+			this->label10->AutoSize = true;
+			this->label10->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(238)));
+			this->label10->Location = System::Drawing::Point(9, 528);
+			this->label10->Name = L"label10";
+			this->label10->Size = System::Drawing::Size(251, 19);
+			this->label10->TabIndex = 39;
+			this->label10->Text = L"Wybierz typ zapisywanego obrazu:";
+			// 
+			// button8
+			// 
+			this->button8->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(238)));
+			this->button8->Location = System::Drawing::Point(219, 842);
+			this->button8->Name = L"button8";
+			this->button8->Size = System::Drawing::Size(151, 29);
+			this->button8->TabIndex = 40;
+			this->button8->Text = L"Generuj raport";
+			this->button8->UseVisualStyleBackColor = true;
+			this->button8->Click += gcnew System::EventHandler(this, &MyForm1::button8_Click);
+			// 
+			// saveFileDialog1
+			// 
+			this->saveFileDialog1->Filter = L"Plik CSV (*.csv)|*.csv|Plik tekstowy (*.txt)|*.txt|Wszystkie pliki (*.*)|*.*";
+			// 
 			// MyForm1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1272, 883);
+			this->Controls->Add(this->button8);
+			this->Controls->Add(this->label10);
+			this->Controls->Add(this->comboBox2);
 			this->Controls->Add(this->label15);
 			this->Controls->Add(this->label14);
 			this->Controls->Add(this->button7);
@@ -647,7 +692,6 @@ namespace IPZ {
 			this->Controls->Add(this->label12);
 			this->Controls->Add(this->checkBox1);
 			this->Controls->Add(this->label11);
-			this->Controls->Add(this->label10);
 			this->Controls->Add(this->button5);
 			this->Controls->Add(this->pictureBox4);
 			this->Controls->Add(this->comboBox1);
@@ -694,204 +738,272 @@ namespace IPZ {
 
 		}
 #pragma endregion
-public:int var;
-bool chceck_id = false;
-bool id_photo = false;
+	public:int var;
+		   bool chceck_id = false;
+		   bool id_photo = false;
+		   int numer = 0;
 
-		void DrawCVImage(System::Windows::Forms::Control^ control, cv::Mat& colorImage){
-			System::Drawing::Graphics^ graphics = control->CreateGraphics();
-			System::IntPtr ptr(colorImage.ptr());
-			System::Drawing::Bitmap^ b = gcnew System::Drawing::Bitmap(colorImage.cols, colorImage.rows, colorImage.step, System::Drawing::Imaging::PixelFormat::Format24bppRgb, ptr);
-			System::Drawing::RectangleF rect(0, 0, control->Width, control->Height);
-			graphics->DrawImage(b, rect);
-			delete graphics;
-		}
-		void DrawCVImage1(System::Windows::Forms::Control^ control, cv::Mat& colorImage){
-			System::Drawing::Graphics^ graphics = control->CreateGraphics();
-			System::IntPtr ptr(colorImage.ptr());
-			System::Drawing::Bitmap^ b = gcnew System::Drawing::Bitmap(colorImage.cols, colorImage.rows, colorImage.step, System::Drawing::Imaging::PixelFormat::Format8bppIndexed, ptr);
-			System::Drawing::RectangleF rect(0, 0, control->Width, control->Height);
-			graphics->DrawImage(b, rect);
-			delete graphics;
-		}
-		void Image() {
-			id_photo = true;
-			VideoCapture capture = VideoCapture(var); 
-			Mat frame, ing, img, hsv_img,hsv,picture,picture_2,picture_3;
-			vector<Mat> hsv_split;
-			capture >> frame;
-			
-			if (!capture.isOpened())
-			{
-				MessageBox::Show("B³¹d kamery! spróbuj pod³¹czyæ jeszcze raz.", "B³¹d", MessageBoxButtons::OK, MessageBoxIcon::Error);
-				return;
-			}
-				while (waitKey(15) != 27)
-				{
-					label8->Text = Convert::ToString(trackBar1->Value);
-					label9->Text = Convert::ToString(trackBar2->Value);
-					capture >> frame;
-					frame.copyTo(img);
-					cvtColor(img, picture_3, CV_RGB2GRAY);
-					cvtColor(img, hsv_img, CV_BGR2HSV);
-					split(hsv_img, hsv_split);
-					int x = 100;
-					int y = 150;
-					inRange(hsv_split[0], x, y, picture);
-					inRange(picture_3, trackBar1->Value, trackBar2->Value, picture_2);
-					DrawCVImage(pictureBox1, frame);
-					DrawCVImage1(pictureBox2, picture);
-					DrawCVImage1(pictureBox3, picture_2);
-					if (!DoEvents())
-						break;
-				}
-				capture.release();	
-		}
-		bool DoEvents()
-		{
-			MSG msg;
-			BOOL result;
+		   void DrawCVImage(System::Windows::Forms::Control^ control, cv::Mat& colorImage) {
+			   System::Drawing::Graphics^ graphics = control->CreateGraphics();
+			   System::IntPtr ptr(colorImage.ptr());
+			   System::Drawing::Bitmap^ b = gcnew System::Drawing::Bitmap(colorImage.cols, colorImage.rows, colorImage.step, System::Drawing::Imaging::PixelFormat::Format24bppRgb, ptr);
+			   System::Drawing::RectangleF rect(0, 0, control->Width, control->Height);
+			   graphics->DrawImage(b, rect);
+			   delete graphics;
+		   }
+		   void DrawCVImage1(System::Windows::Forms::Control^ control, cv::Mat& colorImage) {
+			   System::Drawing::Graphics^ graphics = control->CreateGraphics();
+			   System::IntPtr ptr(colorImage.ptr());
+			   System::Drawing::Bitmap^ b = gcnew System::Drawing::Bitmap(colorImage.cols, colorImage.rows, colorImage.step, System::Drawing::Imaging::PixelFormat::Format8bppIndexed, ptr);
+			   System::Drawing::RectangleF rect(0, 0, control->Width, control->Height);
+			   graphics->DrawImage(b, rect);
+			   delete graphics;
+		   }
+		   void Image() {
+			   id_photo = true;
+			   VideoCapture capture = VideoCapture(var);
+			   Mat frame, ing, img, hsv_img, hsv, picture, picture_2, picture_3;
+			   vector<Mat> hsv_split;
+			   capture >> frame;
 
-			while (::PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))
-			{
-				result = ::GetMessage(&msg, NULL, 0, 0);
-				if (result == 0) // WM_QUIT
-				{
-					::PostQuitMessage(msg.wParam);
-					return false;
-				}
-				else if (result == -1)
-					return true;    //error occured
-				else
-				{
-					::TranslateMessage(&msg);
-					::DispatchMessage(&msg);
-				}
-			}
-			return true;
-		}
-private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
+			   if (!capture.isOpened())
+			   {
+				   MessageBox::Show("B³¹d kamery! spróbuj pod³¹czyæ jeszcze raz.", "B³¹d", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				   return;
+			   }
+			   while (waitKey(15) != 27)
+			   {
+				   label8->Text = Convert::ToString(trackBar1->Value);
+				   label9->Text = Convert::ToString(trackBar2->Value);
+				   capture >> frame;
+				   frame.copyTo(img);
+				   cvtColor(img, picture_3, CV_RGB2GRAY);
+				   cvtColor(img, hsv_img, CV_BGR2HSV);
+				   split(hsv_img, hsv_split);
+				   int x = 100;
+				   int y = 150;
+				   inRange(hsv_split[0], x, y, picture);
+				   inRange(picture_3, trackBar1->Value, trackBar2->Value, picture_2);
+				   DrawCVImage(pictureBox1, frame);
+				   DrawCVImage1(pictureBox2, picture);
+				   DrawCVImage1(pictureBox3, picture_2);
+				   if (!DoEvents())
+					   break;
+			   }
+			   capture.release();
+		   }
+		   bool DoEvents()
+		   {
+			   MSG msg;
+			   BOOL result;
+
+			   while (::PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))
+			   {
+				   result = ::GetMessage(&msg, NULL, 0, 0);
+				   if (result == 0) // WM_QUIT
+				   {
+					   ::PostQuitMessage(msg.wParam);
+					   return false;
+				   }
+				   else if (result == -1)
+					   return true;    //error occured
+				   else
+				   {
+					   ::TranslateMessage(&msg);
+					   ::DispatchMessage(&msg);
+				   }
+			   }
+			   return true;
+		   }
+	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
 		Image();
-}
-private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-	Application::Exit();
-}
-private: System::Void MyForm1_Load(System::Object^  sender, System::EventArgs^  e) {
-	if (word == "Kamera w laptopie")
-		var = 0;
-	else if (word == "Kamera USB")
-		var = 1;
-	else{
-		var = -1;
-		MessageBox::Show("SprawdŸ po³¹czenie kamerki!", "B³¹d", MessageBoxButtons::OK, MessageBoxIcon::Error);
 	}
-}
-private: System::Void pomocToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
-	Help_myform ^NoweOKno = gcnew Help_myform;
-	NoweOKno->Show();
-}
-private: System::Void synchronizacjaToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
-	Sync ^NoweOKno = gcnew Sync(xd);
-	NoweOKno->Show();
-}
-private: System::Void menuZawansowaneToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
-	
-	if (menuZawansowaneToolStripMenuItem->Checked == false) {
-		this->menuZawansowaneToolStripMenuItem->Checked = true;
-		this->Width = 1290;
-		if ((xd == -1)||(xd == 0)) {
-			checkBox2->Enabled = false;
-			numericUpDown1->Enabled = false;
-			button5->Enabled = false;
+	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
+		Application::Exit();
+	}
+	private: System::Void MyForm1_Load(System::Object^  sender, System::EventArgs^  e) {
+		if (word == "Kamera w laptopie")
+			var = 0;
+		else if (word == "Kamera USB")
+			var = 1;
+		else {
+			var = -1;
+			MessageBox::Show("SprawdŸ po³¹czenie kamerki!", "B³¹d", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
+	}
+	private: System::Void pomocToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+		Help_myform ^NoweOKno = gcnew Help_myform;
+		NoweOKno->Show();
+	}
+	private: System::Void synchronizacjaToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+		Sync ^NoweOKno = gcnew Sync(xd);
+		NoweOKno->Show();
+	}
+	private: System::Void menuZawansowaneToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+
+		if (menuZawansowaneToolStripMenuItem->Checked == false) {
+			this->menuZawansowaneToolStripMenuItem->Checked = true;
+			this->Width = 1290;
+			if ((xd == -1) || (xd == 0)) {
+				checkBox2->Enabled = false;
+				numericUpDown1->Enabled = false;
+				button5->Enabled = false;
+			}
+			else {
+				checkBox1->Checked = true;
+				checkBox1->Enabled = false;
+			}
 		}
 		else {
-			checkBox1->Checked = true;
-			checkBox1->Enabled = false;
+			menuZawansowaneToolStripMenuItem->Checked = false;
+			this->Width = 600;
 		}
 	}
-	else {
-		menuZawansowaneToolStripMenuItem->Checked = false;
-		this->Width = 600;
-	}
-}
-private: System::Void button5_Click(System::Object^  sender, System::EventArgs^  e) {
-	bool fd = false;
-	int value = 0;
+	private: System::Void button5_Click(System::Object^  sender, System::EventArgs^  e) {
+		bool fd = false;
+		int value = 0;
 
-	if (xd == 1){
-		if (serialPort1->PortName != USB_name)
-			serialPort1->PortName = USB_name;
-		if (serialPort1->IsOpen == false)
-			serialPort1->Open();
+		if (xd == 1) {
+			if (serialPort1->PortName != USB_name)
+				serialPort1->PortName = USB_name;
+			if (serialPort1->IsOpen == false)
+				serialPort1->Open();
 
-		if ((serialPort1->IsOpen == true)&&(fd == false))
-		{
-			serialPort1->WriteLine("D");
-			serialPort1->WriteLine(Convert::ToString(numericUpDown1->Value));
-			//do zrobienia komunikacja z ardruino by zczytywa³ wartoœci liczbowe
-			label10->Text = znaczki;
-			fd = true;
+			if ((serialPort1->IsOpen == true) && (fd == false))
+			{
+				serialPort1->WriteLine("D");
+				serialPort1->WriteLine(Convert::ToString(numericUpDown1->Value));
+				fd = true;
+			}
+			fd = false;
 		}
-		fd = false;
-	}
-	else {
-		if (MessageBox::Show("Brak pod³¹czonego ardruino! Czy chcesz siê po³¹czyæ ponownie?", "Pytanie na luzie", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes){
-			Sync ^NoweOKno = gcnew Sync(xd);
-			NoweOKno->Show();
+		else {
+			if (MessageBox::Show("Brak pod³¹czonego ardruino! Czy chcesz siê po³¹czyæ ponownie?", "Pytanie na luzie", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes) {
+				Sync ^NoweOKno = gcnew Sync(xd);
+				NoweOKno->Show();
+			}
 		}
 	}
-}
-private: System::Void serialPort1_DataReceived(System::Object^  sender, System::IO::Ports::SerialDataReceivedEventArgs^  e) {
-	this->znaczki = serialPort1->ReadLine();
-}
-private: System::Void label12_Click(System::Object^  sender, System::EventArgs^  e) {
-}
-private: System::Void button6_Click(System::Object^  sender, System::EventArgs^  e) {
-	pictureBox5->Visible = true;
-	if (chceck_id == false) {
-		pictureBox5->Image = imageList1->Images[0];
-		chceck_id = true;
+	private: System::Void serialPort1_DataReceived(System::Object^  sender, System::IO::Ports::SerialDataReceivedEventArgs^  e) {
+		this->znaczki = serialPort1->ReadLine();
+
 	}
-	else {
-		pictureBox5->Image = imageList1->Images[1];
-		chceck_id = false;
+	private: System::Void label12_Click(System::Object^  sender, System::EventArgs^  e) {
 	}
-}
-		
+	private: System::Void button6_Click(System::Object^  sender, System::EventArgs^  e) {
+		pictureBox5->Visible = true;
+		if (chceck_id == false) {
+			pictureBox5->Image = imageList1->Images[0];
+			chceck_id = true;
+		}
+		else {
+			pictureBox5->Image = imageList1->Images[1];
+			chceck_id = false;
+		}
+	}
 private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) {
-	int i = 0;
-	string path1;
-	
-	VideoCapture capture1 = VideoCapture(var);
-	Mat frame, photo, pic1,pic2;
-	capture1 >> frame;
+int i = 0;
+string path1;
+		if (comboBox2->Text == "Obraz normalny" || comboBox2->Text == "Obraz progowany" || comboBox2->Text == "Obraz HSV" || comboBox2->Text == "Obraz normalny + progowany" || comboBox2->Text == "Obraz normalny + progowany + HSV") {
+			VideoCapture capture1 = VideoCapture(var);
+			Mat frame, photo, pic1,pic2, pic_hsv,pic3;
+			vector<Mat> hsv_split;
+			capture1 >> frame;
 
-	vector<int> compression_params;
-	compression_params.push_back(IMWRITE_PNG_COMPRESSION);
-	compression_params.push_back(1);
-	while (waitKey(20) != 27)
-	{
-		capture1 >> frame;
-		frame.copyTo(photo);
-		//dla progowania
-		cvtColor(photo, pic1, CV_RGB2GRAY);
-		inRange(pic1, trackBar1->Value, trackBar2->Value, pic2);
-		//DrawCVImage(pictureBox4, photo); 
-		DrawCVImage1(pictureBox4, pic2);
+			vector<int> compression_params;
+			compression_params.push_back(IMWRITE_PNG_COMPRESSION);
+			compression_params.push_back(1);
+			while (waitKey(20) != 27)
+			{
+				capture1 >> frame;
+				frame.copyTo(photo);
+				cvtColor(photo, pic1, CV_RGB2GRAY);
+				cvtColor(photo, pic_hsv, CV_BGR2HSV);
+				split(pic_hsv, hsv_split);
+				inRange(pic1, trackBar1->Value, trackBar2->Value, pic2);
+				inRange(hsv_split[0], trackBar1->Value, trackBar2->Value, pic3);
+				i++;
+				if (i == 1)
+					break;
+			}
+			if (comboBox2->Text == "Obraz normalny") {
+				DrawCVImage(pictureBox4, photo);
 
-		System::String^ managed = "test";
-		managed = folderBrowserDialog1->SelectedPath;
-		managed += "\\protokó³.jpg";
-		string path1 = msclr::interop::marshal_as<std::string>(managed);
-		//imwrite(path1,photo, compression_params);
-		imwrite(path1, pic2, compression_params);
-		i++;
-		if (i == 1)
-			break;
-	}
-	capture1.release();
-	if(id_photo == true)
-	Image();
+				System::String^ managed = "test";
+				managed = folderBrowserDialog1->SelectedPath;
+				managed = managed + "\\protokó³" + numer + ".png";
+				string path1 = msclr::interop::marshal_as<std::string>(managed);
+
+				imwrite(path1, photo, compression_params);
+			}
+			else if (comboBox2->Text == "Obraz progowany") {
+				DrawCVImage1(pictureBox4, pic2);
+
+				System::String^ managed = "test";
+				managed = folderBrowserDialog1->SelectedPath;
+				managed = managed + "\\protokó³" + numer + ".png";
+				string path1 = msclr::interop::marshal_as<std::string>(managed);
+
+				imwrite(path1, pic2, compression_params);
+			}
+			else if (comboBox2->Text == "Obraz HSV") {
+				DrawCVImage1(pictureBox4, pic3);
+
+				System::String^ managed = "test";
+				managed = folderBrowserDialog1->SelectedPath;
+				managed = managed + "\\protokó³" + numer + ".png";
+				string path1 = msclr::interop::marshal_as<std::string>(managed);
+
+				imwrite(path1, pic3, compression_params);
+			}
+			else if (comboBox2->Text == "Obraz normalny + progowany") {
+				int numer2 = 0;
+				DrawCVImage1(pictureBox4, pic2);
+
+				System::String^ managed = "test";
+				managed = folderBrowserDialog1->SelectedPath;
+				managed = managed + "\\protokó³" + numer + ".png";
+				string path1 = msclr::interop::marshal_as<std::string>(managed);
+
+				System::String^ managed1 = "test";
+				managed1 = folderBrowserDialog1->SelectedPath;
+				managed1 = managed1 + "\\protokó³" + numer + numer2 + ".png";
+				string path2 = msclr::interop::marshal_as<std::string>(managed1);
+
+				imwrite(path1, photo, compression_params); //obraz normalny
+				imwrite(path2, pic2, compression_params); // obraz progowany
+			}
+			else if (comboBox2->Text == "Obraz normalny + progowany + HSV") {
+				int numer2 = 0;
+				int numer3 = 0;
+				DrawCVImage1(pictureBox4, pic2);
+
+				System::String^ managed = "test";
+				managed = folderBrowserDialog1->SelectedPath;
+				managed = managed + "\\protokó³" + numer + ".png";
+				string path1 = msclr::interop::marshal_as<std::string>(managed);
+
+				System::String^ managed1 = "test";
+				managed1 = folderBrowserDialog1->SelectedPath;
+				managed1 = managed1 + "\\protokó³" + numer + numer2 + ".png";
+				string path2 = msclr::interop::marshal_as<std::string>(managed1);
+
+				System::String^ managed2 = "test";
+				managed2 = folderBrowserDialog1->SelectedPath;
+				managed2 = managed2 + "\\protokó³" + numer + numer2 + numer3 + ".png";
+				string path3 = msclr::interop::marshal_as<std::string>(managed2);
+
+				imwrite(path1, photo, compression_params); //obraz normalny
+				imwrite(path2, pic2, compression_params); // obraz progowany
+				imwrite(path3, pic3, compression_params); // obraz HSV
+			}
+			numer++;
+			capture1.release();
+			if (id_photo == true)
+				Image();
+		}
+		else
+			MessageBox::Show("B³êdnie wybrane typy plików do zapisu! Wybierz poprawny typ z listy!", "B³¹d na luzie", MessageBoxButtons::OK, MessageBoxIcon::Error);
 }
 private: System::Void button7_Click(System::Object^  sender, System::EventArgs^  e) {
 	folderBrowserDialog1->ShowDialog();
@@ -912,6 +1024,17 @@ private: System::Void checkBox2_CheckedChanged(System::Object^  sender, System::
 		serialPort1->WriteLine("B");
 	else
 		serialPort1->WriteLine("C");
+}
+private: System::Void button8_Click(System::Object^  sender, System::EventArgs^  e) {
+	saveFileDialog1->ShowDialog();
+	System::String^ file_path = "";
+	file_path = saveFileDialog1->FileName;
+	string path = msclr::interop::marshal_as<std::string>(file_path);
+
+	ofstream pliczek(path);
+	pliczek << "Jakiœ tekst" << endl;
+	//https://stackoverflow.com/questions/25201131/writing-csv-files-from-c
+	pliczek.close();
 }
 };
 }

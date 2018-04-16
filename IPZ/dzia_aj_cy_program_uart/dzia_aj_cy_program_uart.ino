@@ -31,6 +31,11 @@ void loop(){
     znak = 0;
   break;
   
+  case 'X':
+  Serial.println("No działam");
+  delay(250);
+  break;
+  
   case 'B':
     Serial.print("no dziala\n");
     delay(500);
@@ -48,18 +53,15 @@ void loop(){
   case 'D':
   Serial.print("JP\n");
   znak = 0;
-  delay(500);
   while(Serial.available()){
-    delay(2000);
+    delay(250);
     c_liczba = Serial.read();
     readString += c_liczba;
-    delay(2);
   }
   if (readString.length() >0) {
     Serial.println(readString);
     int i_liczba = readString.toInt();
     serwomechanizm.write(i_liczba);
-  delay(500);
   readString ="";
   break;
   }
