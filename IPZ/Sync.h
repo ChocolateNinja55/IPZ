@@ -274,6 +274,7 @@ namespace IPZ {
 			this->Name = L"Sync";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Okno synchronizacji";
+			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &Sync::Sync_FormClosing);
 			this->Load += gcnew System::EventHandler(this, &Sync::Sync_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->ResumeLayout(false);
@@ -284,12 +285,15 @@ namespace IPZ {
 		bool chceckk = false;
 		bool brak = false;
 private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
-	//MyForm1 ^update = gcnew MyForm1(Port_name, xddd);
-	//update->Show();
 	Sync::Close();
 	}
 private: System::Void serialPort1_DataReceived(System::Object^  sender, System::IO::Ports::SerialDataReceivedEventArgs^  e) {
-	this->reply = serialPort1->ReadLine();
+	try {
+		this->reply = serialPort1->ReadLine();
+	}
+	catch (TimeoutException()) {}
+	catch(...){}
+	//catch(Exception ex){}
 }
 private: System::Void Sync_Load(System::Object^  sender, System::EventArgs^  e) {
 	timer1->Start();
@@ -317,6 +321,7 @@ private: System::Void Sync_Load(System::Object^  sender, System::EventArgs^  e) 
 			 }
 		 }
 private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
+	try {
 		if (chceckk == false) {
 			if (serialPort1->IsOpen == false)
 				chceck_USB(reply);
@@ -335,7 +340,21 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 				serialPort1->WriteLine("X");
 				chceckk = true;
 				xddd = 1;
-				//serialPort1->Close();
+				serialPort1->Close();
+			}
+			else if ((reply != "Siemandero") && (reply != "")) {
+				if (serialPort1->IsOpen == true) {
+					this->serialPort1->ReadTimeout = 500;
+					this->reply = serialPort1->ReadLine();
+					if (reply == "Siemandero") {
+						label3->Text = "Pod³¹czony";
+						pictureBox1->Image = imageList1->Images[1];
+						serialPort1->WriteLine("X");
+						chceckk = true;
+						xddd = 1;
+						serialPort1->Close();
+					}
+				}
 			}
 			else {
 				MessageBox::Show("SprawdŸ po³¹czenie pomiêdzy Ardruino a USB", "B³¹d na luzie ziomeczku", MessageBoxButtons::OK, MessageBoxIcon::Error);
@@ -351,6 +370,8 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 			chceckk = false;
 			xddd = -1;
 		}
+	}
+	catch(...){}
 	}
 private: System::Void checkBox2_Click(System::Object^  sender, System::EventArgs^  e) {
 	checkBox1->Checked = false;
@@ -373,6 +394,9 @@ private: System::Void button3_Click(System::Object^  sender, System::EventArgs^ 
 		comboBox1->Text = "";
 		//comboBox1->Items->Remove(0);
 	}
+	
+}
+private: System::Void Sync_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e) {
 	
 }
 };

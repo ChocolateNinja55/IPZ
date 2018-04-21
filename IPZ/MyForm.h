@@ -347,7 +347,11 @@ private: System::Void zamknijToolStripMenuItem_Click(System::Object^  sender, Sy
 private: System::Void checkBox1_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
 }
 private: System::Void serialPort1_DataReceived(System::Object^  sender, System::IO::Ports::SerialDataReceivedEventArgs^  e) {
-	this->znak = serialPort1->ReadLine();
+	try {
+		this->znak = serialPort1->ReadLine();
+	}
+	catch (TimeoutException()) {}
+	catch (...) {};
 }
 private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e) {
 	pictureBox1->Image = imageList1->Images[0];
@@ -374,7 +378,8 @@ void chceck_USB(System::String ^nazwa_portu){
 				 }
 		 }
 private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
-	if (chceck == false) {
+	try {
+		if (chceck == false) {
 			if (serialPort1->IsOpen == false)
 				chceck_USB(port_Name);
 
@@ -418,14 +423,16 @@ private: System::Void button2_Click(System::Object^  sender, System::EventArgs^ 
 				pictureBox1->Image = imageList1->Images[0];
 				xyz = -1;
 			}
+		}
+		else {
+			serialPort1->Close();
+			label3->Text = "Niepod³¹czony";
+			pictureBox1->Image = imageList1->Images[0];
+			chceck = false;
+			xyz = -1;
+		}
 	}
-	else{
-		serialPort1->Close();
-		label3->Text = "Niepod³¹czony";
-		pictureBox1->Image = imageList1->Images[0];
-		chceck = false;
-		xyz = -1;
-	}
+	catch(...){}
 }
 private: System::Void nieWiemCoTuMo¿eBycToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 	Sync^NoweOKno = gcnew Sync(xyz);
