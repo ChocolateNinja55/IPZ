@@ -2,6 +2,7 @@
 //#include "MyForm1.h"
 #using <System.dll>
 
+
 namespace IPZ {
 
 	using namespace System;
@@ -21,8 +22,11 @@ namespace IPZ {
 	public:System::String ^reply = "";
 	public:System::String ^Port_name = "COM1";
 	private: System::Windows::Forms::Label^  label4;
-	public: int spr1 = 0;
+	public: int spr1 = 0,test=0;
 	private: System::Windows::Forms::Button^  button3;
+
+
+
 	public:
 	public: int xddd = 0; // zmienna pokazuj¹ca czy otwarto po³¹czenie
 
@@ -399,5 +403,7 @@ private: System::Void button3_Click(System::Object^  sender, System::EventArgs^ 
 private: System::Void Sync_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e) {
 	
 }
+
+
 };
 }

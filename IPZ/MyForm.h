@@ -6,7 +6,6 @@
 #include "Sync.h"
 #include <fstream>
 #using <System.dll>
-
 namespace IPZ {
 
 
@@ -27,7 +26,7 @@ namespace IPZ {
 	{
 	public:System::String ^znak = "";	
 	public:System::String ^port_Name = "COM1";
-	public: int xyz = 0;
+	public: int xyz = 0, tst=0;
 
 	private: System::Windows::Forms::Label^  label4;
 
@@ -233,7 +232,7 @@ namespace IPZ {
 			this->pictureBox1->Location = System::Drawing::Point(53, 127);
 			this->pictureBox1->Name = L"pictureBox1";
 			this->pictureBox1->Size = System::Drawing::Size(254, 181);
-			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::AutoSize;
+			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->pictureBox1->TabIndex = 5;
 			this->pictureBox1->TabStop = false;
 			this->pictureBox1->WaitOnLoad = true;
@@ -330,6 +329,7 @@ public:System::String^ dafug = "";
 			NoweOKno->Show();
 	}
 	else if (comboBox1->Text == "Kamera USB"){
+		
 			MyForm::Visible = false;
 			MyForm1 ^NoweOKno = gcnew MyForm1(comboBox1->Text,port_Name,xyz);
 			NoweOKno->Show();
@@ -437,6 +437,11 @@ private: System::Void button2_Click(System::Object^  sender, System::EventArgs^ 
 private: System::Void nieWiemCoTuMo¿eBycToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 	Sync^NoweOKno = gcnew Sync(xyz);
 	NoweOKno->Show();
+	tst = NoweOKno->test;
+	cout << tst<<endl;
+	
+	
+	
 }
 };
 }
