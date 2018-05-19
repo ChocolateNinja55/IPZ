@@ -4333,7 +4333,7 @@
 </value>
   </data>
   <metadata name="serialPort1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>152, 17</value>
+    <value>148, 19</value>
   </metadata>
   <metadata name="imageList1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>280, 17</value>
@@ -4343,7 +4343,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADA
-        SgAAAk1TRnQBSQFMAgEBAgEAAfgBAAH4AQABMgEAATIBAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAHI
+        SgAAAk1TRnQBSQFMAgEBAgEAAXgBAQF4AQEBMgEAATIBAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAHI
         AwABMgMAAQEBAAEYBQABMAF1FQAB9gH5AfcB8wH4AfQB8wH4AvMB+ALzAfgC8wH4AvMB+AHzAfcB+gH3
         A/QbAAP3AfgB+wH5AeMB8QHpAbwB3AHLAZMByAGsAXwBvAGZAWcBsgGMAVcBqgF/AUcBoQFyATYBmgFm
         ASgBkwFdARwBjAFSARMBhwFLAQwBhAFGAQUBgQFCAQMBgAFBAQQBgQFCAQcBgwFEAQ8BhgFJAR4BjQFU
@@ -4670,6 +4670,9 @@
   </metadata>
   <metadata name="saveFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>614, 17</value>
+  </metadata>
+  <metadata name="backgroundWorker1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>776, 17</value>
   </metadata>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

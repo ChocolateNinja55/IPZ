@@ -30,6 +30,9 @@
     <ClCompile Include="Sync.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MyForm2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyForm.h">
@@ -44,6 +47,9 @@
     <ClInclude Include="Sync.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="MyForm2.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MyForm.resx">
@@ -53,6 +59,9 @@
       <Filter>Resource Files</Filter>
     </EmbeddedResource>
     <EmbeddedResource Include="Help_myform.resx">
+      <Filter>Resource Files</Filter>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sync.resx">
       <Filter>Resource Files</Filter>
     </EmbeddedResource>
   </ItemGroup>
