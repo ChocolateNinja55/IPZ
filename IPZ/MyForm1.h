@@ -11,6 +11,8 @@
 #include "Sync.h"
 #include <msclr\marshal_cppstd.h>
 #include <fstream>
+#include <istream>
+#include <cmath>
 
 
 namespace IPZ {
@@ -29,7 +31,6 @@ namespace IPZ {
 
 	
 	bool DoEvents();
-
 	/// <summary>
 	/// Summary for MyForm1
 	/// </summary>
@@ -37,13 +38,15 @@ namespace IPZ {
 	{
 	public:System::String^ word;
 	static int xd;
-	static long double px_mm_ratio=0.0, basic_height=0, basic_width=0, diff=0;
+	static double px_mm_ratio=0.0, basic_height=0, basic_width=0, diff=0;
 	System::String^ USB_name;
-	
+
 	private: static bool is_running = false;
-			 long double temp_h=0, temp_w=0;
-
-
+			 double temp_h=0, temp_w=0;
+			 System::Collections::Generic::List<int>^ list;
+			 System::Collections::Generic::List<double>^ list1;
+			 System::Collections::Generic::List<double>^ list2;
+			
 
 	private: System::Windows::Forms::Label^  label11;
 	private: System::Windows::Forms::CheckBox^  checkBox1;
@@ -52,7 +55,7 @@ namespace IPZ {
 	private: System::Windows::Forms::Label^  label13;
 	private: System::Windows::Forms::PictureBox^  pictureBox5;
 	private: System::Windows::Forms::ImageList^  imageList1;
-	private: System::Windows::Forms::Button^  button6;
+
 
 	private:
 
@@ -63,7 +66,7 @@ namespace IPZ {
 	private: System::Windows::Forms::Label^  label15;
 	private: System::Windows::Forms::ComboBox^  comboBox2;
 	private: System::Windows::Forms::Label^  label10;
-	private: System::Windows::Forms::Button^  button8;
+
 	private: System::Windows::Forms::SaveFileDialog^  saveFileDialog1;
 	private: System::Windows::Forms::Button^  startAutomationProcessButton;
 	private: System::Windows::Forms::Button^  stopAutomationProcessButton;
@@ -75,6 +78,12 @@ namespace IPZ {
 	private: System::Windows::Forms::Label^  howManyMeasuresLabel;
 	public: System::Windows::Forms::Label^  OkMeasuresLabel;
 	private: System::Windows::Forms::Label^  wrongMeasuersLabel;
+	private: System::Windows::Forms::ToolStripMenuItem^  toolStripMenuItem1;
+	private: System::Windows::Forms::ToolStripMenuItem^  toolStripMenuItem2;
+	private: System::Windows::Forms::SaveFileDialog^  saveFileDialog2;
+	private: System::Windows::Forms::ToolStripMenuItem^  toolStripMenuItem3;
+	private: System::Windows::Forms::OpenFileDialog^  openFileDialog1;
+
 
 
 
@@ -83,6 +92,8 @@ namespace IPZ {
 
 	public:
 	public: System::String^ znaczki;
+			
+
 
 	public:
 		MyForm1(void)
@@ -98,9 +109,7 @@ namespace IPZ {
 			word = text;
 			xd = var; //spr czy jest po³¹czenie -1 brak, 1 jest 
 			USB_name = usb_name;
-			label8->Text = Convert::ToString(trackBar1->Value);
-			label9->Text = Convert::ToString(trackBar2->Value);
-			this->Width = 1000;
+		
 			//TODO: Add the constructor code here
 			//
 		}
@@ -109,9 +118,7 @@ namespace IPZ {
 			InitializeComponent();
 			xd = var; //spr czy jest po³¹czenie -1 brak, 1 jest 
 			USB_name = usb_name;
-			label8->Text = Convert::ToString(trackBar1->Value);
-			label9->Text = Convert::ToString(trackBar2->Value);
-			this->Width = 1000;
+			
 			//TODO: Add the constructor code here
 			//
 		}
@@ -127,16 +134,14 @@ namespace IPZ {
 			}
 
 		}
-	private: System::Windows::Forms::Button^  button1;
+
 
 
 	protected:
 
 
-	private: System::Windows::Forms::Button^  button2;
+
 	private: System::Windows::Forms::PictureBox^  pictureBox1;
-	private: System::Windows::Forms::Label^  label1;
-	private: System::Windows::Forms::Button^  button3;
 	private: System::Windows::Forms::PictureBox^  pictureBox2;
 	private: System::Windows::Forms::PictureBox^  pictureBox3;
 	private: System::Windows::Forms::TrackBar^  trackBar1;
@@ -147,8 +152,8 @@ namespace IPZ {
 	private: System::Windows::Forms::Label^  label5;
 	private: System::Windows::Forms::Label^  label6;
 	private: System::Windows::Forms::Label^  label7;
-	private: System::Windows::Forms::Label^  label8;
-	private: System::Windows::Forms::Label^  label9;
+
+
 	private: System::Windows::Forms::MenuStrip^  menuStrip1;
 	private: System::Windows::Forms::ToolStripMenuItem^  plikToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  synchronizacjaToolStripMenuItem;
@@ -178,7 +183,9 @@ namespace IPZ {
 		/// Required designer variable.
 		/// </summary>
 
-
+		/*list = gcnew(System::Collections::Generic::List<int>);
+		list1= gcnew (System::Collections::Generic::List<double>);
+		list2 = gcnew(System::Collections::Generic::List<double>);*/
 #pragma region Windows Form Designer generated code
 		/// <summary>
 		/// Required method for Designer support - do not modify
@@ -186,13 +193,12 @@ namespace IPZ {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			list = gcnew(System::Collections::Generic::List<int>);
+			list1= gcnew (System::Collections::Generic::List<double>);
+			list2 = gcnew(System::Collections::Generic::List<double>);
 			this->components = (gcnew System::ComponentModel::Container());
 			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm1::typeid));
-			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
-			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
 			this->pictureBox3 = (gcnew System::Windows::Forms::PictureBox());
 			this->trackBar1 = (gcnew System::Windows::Forms::TrackBar());
@@ -203,13 +209,14 @@ namespace IPZ {
 			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->label6 = (gcnew System::Windows::Forms::Label());
 			this->label7 = (gcnew System::Windows::Forms::Label());
-			this->label8 = (gcnew System::Windows::Forms::Label());
-			this->label9 = (gcnew System::Windows::Forms::Label());
 			this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
 			this->plikToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->synchronizacjaToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->menuZawansowaneToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->pomocToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->toolStripMenuItem1 = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->toolStripMenuItem2 = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->toolStripMenuItem3 = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->button4 = (gcnew System::Windows::Forms::Button());
 			this->numericUpDown1 = (gcnew System::Windows::Forms::NumericUpDown());
 			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
@@ -223,14 +230,12 @@ namespace IPZ {
 			this->label13 = (gcnew System::Windows::Forms::Label());
 			this->pictureBox5 = (gcnew System::Windows::Forms::PictureBox());
 			this->imageList1 = (gcnew System::Windows::Forms::ImageList(this->components));
-			this->button6 = (gcnew System::Windows::Forms::Button());
 			this->button7 = (gcnew System::Windows::Forms::Button());
 			this->label14 = (gcnew System::Windows::Forms::Label());
 			this->folderBrowserDialog1 = (gcnew System::Windows::Forms::FolderBrowserDialog());
 			this->label15 = (gcnew System::Windows::Forms::Label());
 			this->comboBox2 = (gcnew System::Windows::Forms::ComboBox());
 			this->label10 = (gcnew System::Windows::Forms::Label());
-			this->button8 = (gcnew System::Windows::Forms::Button());
 			this->saveFileDialog1 = (gcnew System::Windows::Forms::SaveFileDialog());
 			this->startAutomationProcessButton = (gcnew System::Windows::Forms::Button());
 			this->stopAutomationProcessButton = (gcnew System::Windows::Forms::Button());
@@ -242,6 +247,8 @@ namespace IPZ {
 			this->howManyMeasuresLabel = (gcnew System::Windows::Forms::Label());
 			this->OkMeasuresLabel = (gcnew System::Windows::Forms::Label());
 			this->wrongMeasuersLabel = (gcnew System::Windows::Forms::Label());
+			this->saveFileDialog2 = (gcnew System::Windows::Forms::SaveFileDialog());
+			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->BeginInit();
@@ -253,61 +260,17 @@ namespace IPZ {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox5))->BeginInit();
 			this->SuspendLayout();
 			// 
-			// button1
-			// 
-			this->button1->Location = System::Drawing::Point(12, 842);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(179, 29);
-			this->button1->TabIndex = 0;
-			this->button1->Text = L"Zamknij program";
-			this->button1->UseVisualStyleBackColor = true;
-			this->button1->Click += gcnew System::EventHandler(this, &MyForm1::button1_Click);
-			// 
-			// button2
-			// 
-			this->button2->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(238)));
-			this->button2->Location = System::Drawing::Point(13, 325);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(142, 23);
-			this->button2->TabIndex = 3;
-			this->button2->Text = L"Uruchom kamere";
-			this->button2->UseVisualStyleBackColor = true;
-			this->button2->Click += gcnew System::EventHandler(this, &MyForm1::button2_Click);
-			// 
 			// pictureBox1
 			// 
 			this->pictureBox1->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
 			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
-			this->pictureBox1->Location = System::Drawing::Point(12, 50);
+			this->pictureBox1->Location = System::Drawing::Point(12, 31);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(448, 254);
+			this->pictureBox1->Size = System::Drawing::Size(472, 273);
 			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->pictureBox1->TabIndex = 4;
 			this->pictureBox1->TabStop = false;
 			this->pictureBox1->WaitOnLoad = true;
-			// 
-			// label1
-			// 
-			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(238)));
-			this->label1->Location = System::Drawing::Point(100, 28);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(308, 19);
-			this->label1->TabIndex = 5;
-			this->label1->Text = L"Obraz przechwytywany z wybranej kamery";
-			// 
-			// button3
-			// 
-			this->button3->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(238)));
-			this->button3->Location = System::Drawing::Point(173, 325);
-			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(118, 23);
-			this->button3->TabIndex = 6;
-			this->button3->Text = L"Zamknij stream";
-			this->button3->UseVisualStyleBackColor = true;
 			// 
 			// pictureBox2
 			// 
@@ -336,16 +299,18 @@ namespace IPZ {
 			this->trackBar1->Name = L"trackBar1";
 			this->trackBar1->Size = System::Drawing::Size(322, 56);
 			this->trackBar1->TabIndex = 10;
-			this->trackBar1->Value = 100;
+			this->trackBar1->Value = 120;
+			this->trackBar1->Scroll += gcnew System::EventHandler(this, &MyForm1::trackBar1_Scroll);
 			// 
 			// trackBar2
 			// 
 			this->trackBar2->Location = System::Drawing::Point(12, 477);
 			this->trackBar2->Maximum = 255;
 			this->trackBar2->Name = L"trackBar2";
-			this->trackBar2->Size = System::Drawing::Size(337, 56);
+			this->trackBar2->Size = System::Drawing::Size(322, 56);
 			this->trackBar2->TabIndex = 11;
 			this->trackBar2->Value = 120;
+			this->trackBar2->Scroll += gcnew System::EventHandler(this, &MyForm1::trackBar2_Scroll);
 			// 
 			// label2
 			// 
@@ -394,53 +359,33 @@ namespace IPZ {
 			this->label6->AutoSize = true;
 			this->label6->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
-			this->label6->Location = System::Drawing::Point(310, 369);
+			this->label6->Location = System::Drawing::Point(340, 398);
 			this->label6->Name = L"label6";
-			this->label6->Size = System::Drawing::Size(130, 19);
+			this->label6->Size = System::Drawing::Size(33, 19);
 			this->label6->TabIndex = 16;
-			this->label6->Text = L"Obecna wartoœæ:";
+			this->label6->Text = L"120";
 			// 
 			// label7
 			// 
 			this->label7->AutoSize = true;
 			this->label7->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
-			this->label7->Location = System::Drawing::Point(310, 453);
+			this->label7->Location = System::Drawing::Point(340, 477);
 			this->label7->Name = L"label7";
-			this->label7->Size = System::Drawing::Size(130, 19);
+			this->label7->Size = System::Drawing::Size(33, 19);
 			this->label7->TabIndex = 17;
-			this->label7->Text = L"Obecna wartoœæ:";
-			// 
-			// label8
-			// 
-			this->label8->AutoSize = true;
-			this->label8->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(238)));
-			this->label8->Location = System::Drawing::Point(446, 369);
-			this->label8->Name = L"label8";
-			this->label8->Size = System::Drawing::Size(0, 19);
-			this->label8->TabIndex = 18;
-			// 
-			// label9
-			// 
-			this->label9->AutoSize = true;
-			this->label9->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(238)));
-			this->label9->Location = System::Drawing::Point(446, 453);
-			this->label9->Name = L"label9";
-			this->label9->Size = System::Drawing::Size(0, 19);
-			this->label9->TabIndex = 19;
+			this->label7->Text = L"120";
 			// 
 			// menuStrip1
 			// 
 			this->menuStrip1->ImageScalingSize = System::Drawing::Size(20, 20);
-			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(5) {
 				this->plikToolStripMenuItem,
-					this->pomocToolStripMenuItem
+					this->pomocToolStripMenuItem, this->toolStripMenuItem1, this->toolStripMenuItem2, this->toolStripMenuItem3
 			});
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
-			this->menuStrip1->Size = System::Drawing::Size(1256, 28);
+			this->menuStrip1->Size = System::Drawing::Size(1272, 28);
 			this->menuStrip1->TabIndex = 20;
 			this->menuStrip1->Text = L"menuStrip1";
 			// 
@@ -475,15 +420,35 @@ namespace IPZ {
 			this->pomocToolStripMenuItem->Text = L"P&omoc";
 			this->pomocToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm1::pomocToolStripMenuItem_Click);
 			// 
+			// toolStripMenuItem1
+			// 
+			this->toolStripMenuItem1->Name = L"toolStripMenuItem1";
+			this->toolStripMenuItem1->Size = System::Drawing::Size(74, 24);
+			this->toolStripMenuItem1->Text = L"Zamknij";
+			this->toolStripMenuItem1->Click += gcnew System::EventHandler(this, &MyForm1::toolStripMenuItem1_Click);
+			// 
+			// toolStripMenuItem2
+			// 
+			this->toolStripMenuItem2->Name = L"toolStripMenuItem2";
+			this->toolStripMenuItem2->Size = System::Drawing::Size(66, 24);
+			this->toolStripMenuItem2->Text = L"Raport";
+			// 
+			// toolStripMenuItem3
+			// 
+			this->toolStripMenuItem3->Name = L"toolStripMenuItem3";
+			this->toolStripMenuItem3->Size = System::Drawing::Size(145, 24);
+			this->toolStripMenuItem3->Text = L"Wczytaj parametry";
+			this->toolStripMenuItem3->Click += gcnew System::EventHandler(this, &MyForm1::toolStripMenuItem3_Click);
+			// 
 			// button4
 			// 
 			this->button4->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
-			this->button4->Location = System::Drawing::Point(315, 325);
+			this->button4->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button4.Image")));
+			this->button4->Location = System::Drawing::Point(13, 310);
 			this->button4->Name = L"button4";
-			this->button4->Size = System::Drawing::Size(131, 23);
+			this->button4->Size = System::Drawing::Size(71, 56);
 			this->button4->TabIndex = 21;
-			this->button4->Text = L"Zrób zdjêcie";
 			this->button4->UseVisualStyleBackColor = true;
 			this->button4->Click += gcnew System::EventHandler(this, &MyForm1::button4_Click);
 			// 
@@ -512,7 +477,7 @@ namespace IPZ {
 			// pictureBox4
 			// 
 			this->pictureBox4->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox4.Image")));
-			this->pictureBox4->Location = System::Drawing::Point(12, 555);
+			this->pictureBox4->Location = System::Drawing::Point(12, 574);
 			this->pictureBox4->Name = L"pictureBox4";
 			this->pictureBox4->Size = System::Drawing::Size(550, 250);
 			this->pictureBox4->SizeMode = System::Windows::Forms::PictureBoxSizeMode::CenterImage;
@@ -571,7 +536,6 @@ namespace IPZ {
 			this->label12->Size = System::Drawing::Size(271, 19);
 			this->label12->TabIndex = 30;
 			this->label12->Text = L"Wybierz jaki parametr chcesz mierzyæ:";
-			this->label12->Click += gcnew System::EventHandler(this, &MyForm1::label12_Click);
 			// 
 			// checkBox2
 			// 
@@ -591,7 +555,7 @@ namespace IPZ {
 			this->label13->AutoSize = true;
 			this->label13->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
-			this->label13->Location = System::Drawing::Point(179, 808);
+			this->label13->Location = System::Drawing::Point(176, 827);
 			this->label13->Name = L"label13";
 			this->label13->Size = System::Drawing::Size(170, 19);
 			this->label13->TabIndex = 32;
@@ -600,7 +564,7 @@ namespace IPZ {
 			// pictureBox5
 			// 
 			this->pictureBox5->BackColor = System::Drawing::Color::Transparent;
-			this->pictureBox5->Location = System::Drawing::Point(512, 755);
+			this->pictureBox5->Location = System::Drawing::Point(568, 774);
 			this->pictureBox5->Name = L"pictureBox5";
 			this->pictureBox5->Size = System::Drawing::Size(50, 50);
 			this->pictureBox5->SizeMode = System::Windows::Forms::PictureBoxSizeMode::CenterImage;
@@ -612,19 +576,9 @@ namespace IPZ {
 			// imageList1
 			// 
 			this->imageList1->ImageStream = (cli::safe_cast<System::Windows::Forms::ImageListStreamer^>(resources->GetObject(L"imageList1.ImageStream")));
-			this->imageList1->TransparentColor = System::Drawing::Color::White;
+			this->imageList1->TransparentColor = System::Drawing::Color::Black;
 			this->imageList1->Images->SetKeyName(0, L"pobrane.ico");
 			this->imageList1->Images->SetKeyName(1, L"maxresdefault-300x300.ico");
-			// 
-			// button6
-			// 
-			this->button6->Location = System::Drawing::Point(487, 848);
-			this->button6->Name = L"button6";
-			this->button6->Size = System::Drawing::Size(75, 23);
-			this->button6->TabIndex = 34;
-			this->button6->Text = L"button6";
-			this->button6->UseVisualStyleBackColor = true;
-			this->button6->Click += gcnew System::EventHandler(this, &MyForm1::button6_Click);
 			// 
 			// button7
 			// 
@@ -671,9 +625,9 @@ namespace IPZ {
 			this->comboBox2->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
 			this->comboBox2->FormattingEnabled = true;
-			this->comboBox2->Items->AddRange(gcnew cli::array< System::Object^  >(7) {
+			this->comboBox2->Items->AddRange(gcnew cli::array< System::Object^  >(6) {
 				L"Obraz normalny", L"Obraz progowany", L"Obraz HSV",
-					L"Obraz normalny + progowany", L"Obraz normalny + progowany + HSV", L"Kontury", L"Kalibracja"
+					L"Obraz normalny + progowany", L"Kontury", L"Kalibracja"
 			});
 			this->comboBox2->Location = System::Drawing::Point(266, 523);
 			this->comboBox2->Name = L"comboBox2";
@@ -690,18 +644,6 @@ namespace IPZ {
 			this->label10->Size = System::Drawing::Size(251, 19);
 			this->label10->TabIndex = 39;
 			this->label10->Text = L"Wybierz typ zapisywanego obrazu:";
-			// 
-			// button8
-			// 
-			this->button8->Font = (gcnew System::Drawing::Font(L"Century Gothic", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(238)));
-			this->button8->Location = System::Drawing::Point(219, 842);
-			this->button8->Name = L"button8";
-			this->button8->Size = System::Drawing::Size(151, 29);
-			this->button8->TabIndex = 40;
-			this->button8->Text = L"Generuj raport";
-			this->button8->UseVisualStyleBackColor = true;
-			this->button8->Click += gcnew System::EventHandler(this, &MyForm1::button8_Click);
 			// 
 			// saveFileDialog1
 			// 
@@ -728,7 +670,7 @@ namespace IPZ {
 			this->stopAutomationProcessButton->Enabled = false;
 			this->stopAutomationProcessButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 7.8F, System::Drawing::FontStyle::Bold,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(238)));
-			this->stopAutomationProcessButton->Location = System::Drawing::Point(512, 184);
+			this->stopAutomationProcessButton->Location = System::Drawing::Point(521, 184);
 			this->stopAutomationProcessButton->Name = L"stopAutomationProcessButton";
 			this->stopAutomationProcessButton->Size = System::Drawing::Size(121, 42);
 			this->stopAutomationProcessButton->TabIndex = 42;
@@ -752,8 +694,10 @@ namespace IPZ {
 			// 
 			// backgroundWorker1
 			// 
+			this->backgroundWorker1->WorkerReportsProgress = true;
 			this->backgroundWorker1->WorkerSupportsCancellation = true;
 			this->backgroundWorker1->DoWork += gcnew System::ComponentModel::DoWorkEventHandler(this, &MyForm1::backgroundWorker1_DoWork);
+			this->backgroundWorker1->ProgressChanged += gcnew System::ComponentModel::ProgressChangedEventHandler(this, &MyForm1::backgroundWorker1_ProgressChanged);
 			// 
 			// iloscPomiarowLabel
 			// 
@@ -761,7 +705,7 @@ namespace IPZ {
 			this->iloscPomiarowLabel->Enabled = false;
 			this->iloscPomiarowLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
-			this->iloscPomiarowLabel->Location = System::Drawing::Point(513, 254);
+			this->iloscPomiarowLabel->Location = System::Drawing::Point(508, 251);
 			this->iloscPomiarowLabel->Name = L"iloscPomiarowLabel";
 			this->iloscPomiarowLabel->Size = System::Drawing::Size(141, 20);
 			this->iloscPomiarowLabel->TabIndex = 44;
@@ -773,7 +717,7 @@ namespace IPZ {
 			this->PrawidlowychLabel->Enabled = false;
 			this->PrawidlowychLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
-			this->PrawidlowychLabel->Location = System::Drawing::Point(513, 292);
+			this->PrawidlowychLabel->Location = System::Drawing::Point(508, 292);
 			this->PrawidlowychLabel->Name = L"PrawidlowychLabel";
 			this->PrawidlowychLabel->Size = System::Drawing::Size(129, 20);
 			this->PrawidlowychLabel->TabIndex = 45;
@@ -785,11 +729,11 @@ namespace IPZ {
 			this->niezgodnychLabel->Enabled = false;
 			this->niezgodnychLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
-			this->niezgodnychLabel->Location = System::Drawing::Point(513, 328);
+			this->niezgodnychLabel->Location = System::Drawing::Point(508, 327);
 			this->niezgodnychLabel->Name = L"niezgodnychLabel";
-			this->niezgodnychLabel->Size = System::Drawing::Size(122, 20);
+			this->niezgodnychLabel->Size = System::Drawing::Size(155, 20);
 			this->niezgodnychLabel->TabIndex = 46;
-			this->niezgodnychLabel->Text = L"Niezgodnych:";
+			this->niezgodnychLabel->Text = L"Nieprawid³owych:";
 			// 
 			// howManyMeasuresLabel
 			// 
@@ -827,12 +771,24 @@ namespace IPZ {
 			this->wrongMeasuersLabel->TabIndex = 49;
 			this->wrongMeasuersLabel->Text = L"0";
 			// 
+			// saveFileDialog2
+			// 
+			this->saveFileDialog2->DefaultExt = L"txt";
+			this->saveFileDialog2->Filter = L"Plik tekstowy (*.txt)|*.txt|Wszystkie pliki (*.*)|*.*";
+			// 
+			// openFileDialog1
+			// 
+			this->openFileDialog1->DefaultExt = L"txt";
+			this->openFileDialog1->FileName = L"openFileDialog1";
+			this->openFileDialog1->Filter = L"Plik tekstowy (*.txt)|*.txt|Wszystkie pliki (*.*)|*.*";
+			// 
 			// MyForm1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->AutoScroll = true;
-			this->ClientSize = System::Drawing::Size(982, 1066);
+			this->AutoSize = true;
+			this->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
+			this->ClientSize = System::Drawing::Size(1272, 873);
 			this->Controls->Add(this->wrongMeasuersLabel);
 			this->Controls->Add(this->OkMeasuresLabel);
 			this->Controls->Add(this->howManyMeasuresLabel);
@@ -842,13 +798,11 @@ namespace IPZ {
 			this->Controls->Add(this->processIsRunningLabel);
 			this->Controls->Add(this->stopAutomationProcessButton);
 			this->Controls->Add(this->startAutomationProcessButton);
-			this->Controls->Add(this->button8);
 			this->Controls->Add(this->label10);
 			this->Controls->Add(this->comboBox2);
 			this->Controls->Add(this->label15);
 			this->Controls->Add(this->label14);
 			this->Controls->Add(this->button7);
-			this->Controls->Add(this->button6);
 			this->Controls->Add(this->pictureBox5);
 			this->Controls->Add(this->label13);
 			this->Controls->Add(this->checkBox2);
@@ -860,8 +814,6 @@ namespace IPZ {
 			this->Controls->Add(this->comboBox1);
 			this->Controls->Add(this->numericUpDown1);
 			this->Controls->Add(this->button4);
-			this->Controls->Add(this->label9);
-			this->Controls->Add(this->label8);
 			this->Controls->Add(this->label7);
 			this->Controls->Add(this->label6);
 			this->Controls->Add(this->label5);
@@ -872,11 +824,7 @@ namespace IPZ {
 			this->Controls->Add(this->trackBar1);
 			this->Controls->Add(this->pictureBox3);
 			this->Controls->Add(this->pictureBox2);
-			this->Controls->Add(this->button3);
-			this->Controls->Add(this->label1);
 			this->Controls->Add(this->pictureBox1);
-			this->Controls->Add(this->button2);
-			this->Controls->Add(this->button1);
 			this->Controls->Add(this->menuStrip1);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
@@ -887,6 +835,7 @@ namespace IPZ {
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Morfologia";
 			this->Load += gcnew System::EventHandler(this, &MyForm1::MyForm1_Load);
+			this->Shown += gcnew System::EventHandler(this, &MyForm1::MyForm1_Shown);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->EndInit();
@@ -929,7 +878,7 @@ namespace IPZ {
 			   Mat frame, ing, img, hsv_img, hsv, picture, picture_2, picture_3;
 			   vector<Mat> hsv_split;
 			   capture >> frame;
-
+			   
 			   if (!capture.isOpened())
 			   {
 				   MessageBox::Show("B³¹d kamery! spróbuj pod³¹czyæ jeszcze raz.", "B³¹d", MessageBoxButtons::OK, MessageBoxIcon::Error);
@@ -937,8 +886,7 @@ namespace IPZ {
 			   }
 			   while (waitKey(15) != 27)
 			   {
-				   label8->Text = Convert::ToString(trackBar1->Value);
-				   label9->Text = Convert::ToString(trackBar2->Value);
+				  
 				   capture >> frame;
 				   frame.copyTo(img);
 				   cvtColor(img, picture_3, CV_RGB2GRAY);
@@ -983,7 +931,7 @@ namespace IPZ {
 		Image();
 	}
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-		Application::Exit();
+		
 	}
 	private: System::Void MyForm1_Load(System::Object^  sender, System::EventArgs^  e) {
 		if (word == "Kamera w laptopie")
@@ -1052,26 +1000,16 @@ namespace IPZ {
 		this->znaczki = serialPort1->ReadLine();
 
 	}
-	private: System::Void label12_Click(System::Object^  sender, System::EventArgs^  e) {
-	}
-	private: System::Void button6_Click(System::Object^  sender, System::EventArgs^  e) {
-		pictureBox5->Visible = true;
-		if (chceck_id == false) {
-			pictureBox5->Image = imageList1->Images[0];
-			chceck_id = true;
-		}
-		else {
-			pictureBox5->Image = imageList1->Images[1];
-			chceck_id = false;
-		}
-	}
+
 private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) {
-int i = 0;
-string path1;
-		if (comboBox2->Text == "Obraz normalny" || comboBox2->Text == "Obraz progowany" || comboBox2->Text == "Obraz HSV" || comboBox2->Text == "Obraz normalny + progowany" || comboBox2->Text == "Obraz normalny + progowany + HSV" || comboBox2->Text == "Kontury" || comboBox2->Text == "Kalibracja" )
+	int i = 0;
+	string path1;
+	if (!backgroundWorker1->IsBusy)
+	{
+		if (comboBox2->Text == "Obraz normalny" || comboBox2->Text == "Obraz progowany" || comboBox2->Text == "Obraz HSV" || comboBox2->Text == "Obraz normalny + progowany" || comboBox2->Text == "Obraz normalny + progowany + HSV" || comboBox2->Text == "Kontury" || comboBox2->Text == "Kalibracja")
 		{
 			VideoCapture capture1 = VideoCapture(var);
-			Mat frame, photo, pic1,pic2, pic_hsv,pic3, pic_kontury;
+			Mat frame, photo, pic1, pic2, pic_hsv, pic3, pic_kontury;
 			vector<Mat> hsv_split;
 			capture1 >> frame;
 
@@ -1091,97 +1029,37 @@ string path1;
 				if (i == 1)
 					break;
 			}
-		 if (comboBox2->Text == "Kalibracja") {
+			if (comboBox2->Text == "Kalibracja") {
 
-			 Calibration(pic2).copyTo(pic_kontury);
-			DrawCVImage(pictureBox4, pic_kontury);
-		}
-			
-			else if (comboBox2->Text == "Kontury") {
-				System::String^ managed = "test";
-				managed = folderBrowserDialog1->SelectedPath;
-				managed = managed + "\\protokó³" + numer + ".png";
-				string path1 = msclr::interop::marshal_as<std::string>(managed);
-				
-				Contours(pic2).copyTo(pic_kontury); //Funkcja contours rysuje kontur obiektu i zwraca go do "pic_kontury"
+				Calibration(pic2).copyTo(pic_kontury);
 				DrawCVImage(pictureBox4, pic_kontury);
-				check_geometry(temp_h,temp_w);
-				imwrite(path1, pic_kontury, compression_params);
-
 			}
 
-			
+			else if (comboBox2->Text == "Kontury") {
+				Contours(pic2).copyTo(pic_kontury); //Funkcja contours rysuje kontur obiektu i zwraca go do "pic_kontury"
+				DrawCVImage(pictureBox4, pic_kontury);
+				check_geometry();
+				SavePhoto(pic_kontury);
+			}
 			else if (comboBox2->Text == "Obraz normalny") {
 				DrawCVImage(pictureBox4, photo);
-
-				System::String^ managed = "test";
-				managed = folderBrowserDialog1->SelectedPath;
-				managed = managed + "\\protokó³" + numer + ".png";
-				string path1 = msclr::interop::marshal_as<std::string>(managed);
-
-				imwrite(path1, photo, compression_params);
+				SavePhoto(photo);
 			}
 			else if (comboBox2->Text == "Obraz progowany") {
 				DrawCVImage1(pictureBox4, pic2);
-
-				System::String^ managed = "test";
-				managed = folderBrowserDialog1->SelectedPath;
-				managed = managed + "\\protokó³" + numer + ".png";
-				string path1 = msclr::interop::marshal_as<std::string>(managed);
-
-				imwrite(path1, pic2, compression_params);
+				SavePhoto(pic2);
 			}
 			else if (comboBox2->Text == "Obraz HSV") {
 				DrawCVImage1(pictureBox4, pic3);
-
-				System::String^ managed = "test";
-				managed = folderBrowserDialog1->SelectedPath;
-				managed = managed + "\\protokó³" + numer + ".png";
-				string path1 = msclr::interop::marshal_as<std::string>(managed);
-
-				imwrite(path1, pic3, compression_params);
+				SavePhoto(pic3);
 			}
 			else if (comboBox2->Text == "Obraz normalny + progowany") {
 				int numer2 = 0;
 				DrawCVImage1(pictureBox4, pic2);
-
-				System::String^ managed = "test";
-				managed = folderBrowserDialog1->SelectedPath;
-				managed = managed + "\\protokó³" + numer + ".png";
-				string path1 = msclr::interop::marshal_as<std::string>(managed);
-
-				System::String^ managed1 = "test";
-				managed1 = folderBrowserDialog1->SelectedPath;
-				managed1 = managed1 + "\\protokó³" + numer + numer2 + ".png";
-				string path2 = msclr::interop::marshal_as<std::string>(managed1);
-
-				imwrite(path1, photo, compression_params); //obraz normalny
-				imwrite(path2, pic2, compression_params); // obraz progowany
+				SavePhoto(photo);
+				SavePhoto(pic2);
 			}
-			else if (comboBox2->Text == "Obraz normalny + progowany + HSV") {
-				int numer2 = 0;
-				int numer3 = 0;
-				DrawCVImage1(pictureBox4, pic2);
-
-				System::String^ managed = "test";
-				managed = folderBrowserDialog1->SelectedPath;
-				managed = managed + "\\protokó³" + numer + ".png";
-				string path1 = msclr::interop::marshal_as<std::string>(managed);
-
-				System::String^ managed1 = "test";
-				managed1 = folderBrowserDialog1->SelectedPath;
-				managed1 = managed1 + "\\protokó³" + numer + numer2 + ".png";
-				string path2 = msclr::interop::marshal_as<std::string>(managed1);
-
-				System::String^ managed2 = "test";
-				managed2 = folderBrowserDialog1->SelectedPath;
-				managed2 = managed2 + "\\protokó³" + numer + numer2 + numer3 + ".png";
-				string path3 = msclr::interop::marshal_as<std::string>(managed2);
-
-				imwrite(path1, photo, compression_params); //obraz normalny
-				imwrite(path2, pic2, compression_params); // obraz progowany
-				imwrite(path3, pic3, compression_params); // obraz HSV
-			}
+			
 			numer++;
 			capture1.release();
 			if (id_photo == true)
@@ -1189,6 +1067,7 @@ string path1;
 		}
 		else
 			MessageBox::Show("B³êdnie wybrane typy plików do zapisu! Wybierz poprawny typ z listy!", "B³¹d na luzie", MessageBoxButtons::OK, MessageBoxIcon::Error);
+	}
 }
 private: System::Void button7_Click(System::Object^  sender, System::EventArgs^  e) {
 	folderBrowserDialog1->ShowDialog();
@@ -1210,17 +1089,7 @@ private: System::Void checkBox2_CheckedChanged(System::Object^  sender, System::
 	else
 		serialPort1->WriteLine("C");
 }
-private: System::Void button8_Click(System::Object^  sender, System::EventArgs^  e) {
-	saveFileDialog1->ShowDialog();
-	System::String^ file_path = "";
-	file_path = saveFileDialog1->FileName;
-	string path = msclr::interop::marshal_as<std::string>(file_path);
 
-	ofstream pliczek(path);
-	pliczek << "Jakiœ tekst" << endl;
-	//https://stackoverflow.com/questions/25201131/writing-csv-files-from-c
-	pliczek.close();
-}
 		 cv::Mat Contours(Mat cont)
 		 {
 			 Mat pic_blur;
@@ -1263,16 +1132,13 @@ private: System::Void button8_Click(System::Object^  sender, System::EventArgs^ 
 		}
 		 cv::Mat Calibration(Mat cont)
 		 {
-			 long double height = 0, width = 0;
+			 double height = 0, width = 0;
 			 Mat pic_blur;
 			 vector<vector<cv::Point> > contours;
 			 vector<cv::Point> pts, ConvexHullPoints;
 			 Rect boundRect;
 			 MyForm2 ^Input_window = gcnew MyForm2();
 			 Input_window->ShowDialog();
-			
-				 cout <<"podana wysokosc: "<< Input_window->test_height << endl;
-				 cout <<"podana szerokosc: " << Input_window->test_width << endl;
 		
 				 height = Input_window->test_height;		
 				 width = Input_window->test_width;
@@ -1306,47 +1172,54 @@ private: System::Void button8_Click(System::Object^  sender, System::EventArgs^ 
 
 				 }
 				 //Obliczenie wspolczynnika do pomairow geometrii
-				 long double px_mm_ratio_1 = height/ boundRect.height;
-				 long double px_mm_ratio_2 = width / boundRect.width;
+				  double px_mm_ratio_1 = height/ boundRect.height;
+				  double px_mm_ratio_2 = width / boundRect.width;
 				 px_mm_ratio = (px_mm_ratio_1 + px_mm_ratio_2) / 2;
 				 //
-				 cout << px_mm_ratio << endl;
 			
 				 basic_height = height;
 				 basic_width = width;
+
+				 CalibrationSave(width, height, diff,px_mm_ratio);
 				 return drawing;
 
 		 }
 		
 private: System::Void startAutomationProcessButton_Click(System::Object^  sender, System::EventArgs^  e) {
-	if (px_mm_ratio == 0)
+	if (basic_height == 0)
 	{
 		MessageBox::Show("Najpierw nale¿y dokonaæ kalibracji", "WARNING", MessageBoxButtons::OK, MessageBoxIcon::Information);
 	}
 	else
 	{
-		backgroundWorker1->RunWorkerAsync(this->OkMeasuresLabel->Text);
-		//zarz¹dzanie wygl¹dem i dostepnoœci¹ przycisków:
-		this->stopAutomationProcessButton->Enabled = true;
-		this->stopAutomationProcessButton->BackColor = System::Drawing::Color::Red;
-		this->processIsRunningLabel->Visible = true;
-		this->startAutomationProcessButton->BackColor = System::Drawing::SystemColors::ButtonShadow;
-		this->startAutomationProcessButton->Enabled = false;
-		this->iloscPomiarowLabel->Enabled = true;
-		this->niezgodnychLabel->Enabled = true;
-		this->PrawidlowychLabel->Enabled = true;
-		this->howManyMeasuresLabel->Enabled = true;
-		this->OkMeasuresLabel->Enabled = true;
-		this->wrongMeasuersLabel->Enabled = true;
-		//
-
-		
-		
-
+		if (!backgroundWorker1->IsBusy)
+		{
+			backgroundWorker1->RunWorkerAsync();
+			//zarz¹dzanie dotepnoœci¹ przycisków i wyœwietlaniem:
+			this->stopAutomationProcessButton->Enabled = true;
+			this->stopAutomationProcessButton->BackColor = System::Drawing::Color::Red;
+			this->processIsRunningLabel->Visible = true;
+			this->startAutomationProcessButton->BackColor = System::Drawing::SystemColors::ButtonShadow;
+			this->startAutomationProcessButton->Enabled = false;
+			this->iloscPomiarowLabel->Enabled = true;
+			this->niezgodnychLabel->Enabled = true;
+			this->PrawidlowychLabel->Enabled = true;
+			this->howManyMeasuresLabel->Enabled = true;
+			this->OkMeasuresLabel->Enabled = true;
+			this->wrongMeasuersLabel->Enabled = true;
+			this->pictureBox5->Visible = true;
+			this->button4->Enabled = false;
+			////////////////////////////////////////////////////////////////////
+		}
+		else
+		{
+			MessageBox::Show("Proces w tle jeszcze siê nie zakoñczy³,kliknij OK i spróbuj ponownie. ", "Backgroundworker is busy", MessageBoxButtons::OK, MessageBoxIcon::Information);
+		}	
 	}
 }
 private: System::Void stopAutomationProcessButton_Click(System::Object^  sender, System::EventArgs^  e) {
 	this->backgroundWorker1->CancelAsync();
+	//zarz¹dzanie dotepnoœci¹ przycisków i wyœwietlaniem:
 	this->stopAutomationProcessButton->BackColor = System::Drawing::SystemColors::ButtonShadow;
 	this->stopAutomationProcessButton->Enabled = false;
 	this->processIsRunningLabel->Visible = false;
@@ -1358,91 +1231,68 @@ private: System::Void stopAutomationProcessButton_Click(System::Object^  sender,
 	this->howManyMeasuresLabel->Enabled = false;
 	this->OkMeasuresLabel->Enabled = false;
 	this->wrongMeasuersLabel->Enabled = false;
+	this->OkMeasuresLabel->Text = "0";
+	this->wrongMeasuersLabel->Text = "0";
+	this->howManyMeasuresLabel->Text = "0";
+	this->pictureBox5->Visible = false;
+	this->button4->Enabled = true;
+	RaportGenerator();
+	//////////////////////////////////////////////////
 }
 private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::ComponentModel::DoWorkEventArgs^  e) {
-	int i = 0, tmpHowManyMeasure = 0, tmpOkMeasure = 0, tmpWrongMeausre = 0;
+	int i = 0, tmp=0;
 	while (true)
 	{
 		if (backgroundWorker1->CancellationPending)
 		{
 			
 			e->Cancel = true;
+			
 			break;
 		}
+		i++;
+		if (check_geometry())
+		{
+			list->Add(1);
+			
+			backgroundWorker1->ReportProgress(1);
+		}	
+		else
+		{
+			list->Add(0);
+			backgroundWorker1->ReportProgress(0);
+		}
+		char x;
+		do
+		{
+			
+			std::cin >> x;
+		} while (x != 'c');
+		cout << "POMIAR" << endl;
 		
-		//VideoCapture capture1 = VideoCapture(var);
-		//Mat frame, photo, pic1, pic2, pic_hsv, pic3, pic_kontury;
-		//vector<Mat> hsv_split;
-		//capture1 >> frame;
-
-		//vector<int> compression_params;
-		//compression_params.push_back(IMWRITE_PNG_COMPRESSION);
-		//compression_params.push_back(1);
-		//while (waitKey(20) != 27)
-		//{
-		//	
-		//	capture1 >> frame;
-		//	frame.copyTo(photo);
-		//	cvtColor(photo, pic1, CV_RGB2GRAY);
-		//	cvtColor(photo, pic_hsv, CV_BGR2HSV);
-		//	split(pic_hsv, hsv_split);
-		//	inRange(pic1, trackBar1->Value, trackBar2->Value, pic2);
-		//	inRange(hsv_split[0], trackBar1->Value, trackBar2->Value, pic3);
-		//	i++;
-		//	if (i == 1)
-		//		break;
-		//}
-
-		//System::String^ managed = "test";
-		//managed = folderBrowserDialog1->SelectedPath;
-		//managed = managed + "\\protokó³" + numer + ".png";
-		//string path1 = msclr::interop::marshal_as<std::string>(managed);
-
-		//Contours(pic2).copyTo(pic_kontury); //Funkcja contours rysuje kontur obiektu i zwraca go do "pic_kontury"
-		//DrawCVImage(pictureBox4, pic_kontury);
-		//check_geometry(temp_h, temp_w);
-		//imwrite(path1, pic_kontury, compression_params);
-
-		//capture1.release();
-		//if (id_photo == true)
-		//	Image();
-	
-
-		// If the operation was canceled by the user, 
-		// set the DoWorkEventArgs.Cancel property to true.
-			tmpOkMeasure++;
-		e->Result = System::Convert::ToString(tmpOkMeasure);	
-		
-
-			/*tmpWrongMeausre++;
-			this->wrongMeasuersLabel->Text = System::Convert::ToString(tmpWrongMeausre);
-
-
-		tmpHowManyMeasure++;
-		this->howManyMeasuresLabel->Text = System::Convert::ToString(tmpHowManyMeasure);*/
-		cout << "elo" << endl;
-		Thread::Sleep(1000);
+		//Thread::Sleep(3000);
 	}
 	
 
 }
-		 bool check_geometry(long double h, long double w)
+bool check_geometry()
 		 {
 			 bool width_check=false, height_check=false;
-			 if (px_mm_ratio != 0)
+			 if (basic_height != 0)
 			 {
-				 long double t_height = h*px_mm_ratio;
-				 long double t_width =w*px_mm_ratio;
+				 
+				 
+					  double t_height = temp_h * px_mm_ratio;
+					  double t_width = temp_w * px_mm_ratio;
+				 
 				 if (basic_height - diff <= t_height && t_height <= basic_height + diff)
 					  height_check = true;
 				 if (basic_width - diff <= t_width && t_width <= basic_width + diff)
 					 width_check = true;
 
-
-				 //if(width_check&&height_check)
-					// MessageBox::Show("Element zgodny z norm¹", "INFO", MessageBoxButtons::OK, MessageBoxIcon::Information);
-				 //else
-					// MessageBox::Show("Element niezgodny z norm¹", "INFO", MessageBoxButtons::OK, MessageBoxIcon::Information);
+				 list1->Add(abs(basic_height - t_height));
+				 list2->Add(abs(basic_width - t_width));
+				
 				 if (width_check&&height_check)
 					 return true;
 				 else
@@ -1452,5 +1302,154 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 		 }
 
 
+private: System::Void backgroundWorker1_ProgressChanged(System::Object^  sender, System::ComponentModel::ProgressChangedEventArgs^  e) {
+	int tmp=0,i=0;
+	VideoCapture capture1 = VideoCapture(var);
+	Mat frame, photo, pic2,pic1, pic_kontury;
+	vector<Mat> hsv_split;
+	capture1 >> frame;
+	frame.copyTo(photo);
+	cvtColor(photo, pic1, CV_RGB2GRAY);
+	inRange(pic1, trackBar1->Value, trackBar2->Value, pic2);
+	Contours(pic2).copyTo(pic_kontury); //Funkcja contours rysuje kontur obiektu i zwraca go do "pic_kontury"
+	DrawCVImage(pictureBox4, pic_kontury);
+	
+	if (e->ProgressPercentage==0)
+	{
+		tmp = System::Convert::ToInt32(wrongMeasuersLabel->Text);
+		tmp++;
+		wrongMeasuersLabel->Text = System::Convert::ToString(tmp);
+		this->pictureBox5->Image=imageList1->Images[1];
+
+	}
+	else
+	{
+		tmp = System::Convert::ToInt32(OkMeasuresLabel->Text);
+		tmp++;
+		OkMeasuresLabel->Text = System::Convert::ToString(tmp);
+		this->pictureBox5->Image = imageList1->Images[0];
+
+	}
+	tmp = System::Convert::ToInt32(howManyMeasuresLabel->Text);
+	tmp++;
+	howManyMeasuresLabel->Text = System::Convert::ToString(tmp);
+	
+	
+	
+	///////////////////Zliczanie prawidlowy/nieprawidlowy pomiar
+	
+	
+	Image();
+	capture1.release();
+}
+private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
+}
+private: System::Void MyForm1_Shown(System::Object^  sender, System::EventArgs^  e) {
+	Image();
+}
+private: System::Void toolStripMenuItem1_Click(System::Object^  sender, System::EventArgs^  e) {
+	Application::Exit();
+}
+
+private: System::Void trackBar1_Scroll(System::Object^  sender, System::EventArgs^  e) {
+	this->label6->Text = System::Convert::ToString( trackBar1->Value);
+}
+private: System::Void trackBar2_Scroll(System::Object^  sender, System::EventArgs^  e) {
+	this->label7->Text = System::Convert::ToString(trackBar2->Value);
+}
+private: void SavePhoto(cv::Mat PhotoInput)
+{
+	System::String^ managed = "test";
+	managed = folderBrowserDialog1->SelectedPath;
+	managed = managed + "\\protokó³" + numer + ".png";
+	string path1 = msclr::interop::marshal_as<std::string>(managed);
+	imwrite(path1, PhotoInput);
+}
+ private: void RaportGenerator()
+ {
+	 System::Collections::Generic::List<int>^ tmp=list;
+	 
+	 int i = 0, tmpok=0,tmpbad=0;
+	 saveFileDialog1->ShowDialog();
+	 System::String^ file_path = saveFileDialog1->FileName;
+	 string path = msclr::interop::marshal_as<std::string>(file_path);
+	 for (i=0; i < tmp->Count; i++)
+	 {
+		 if (tmp[i] == 1)
+			 tmpok++;
+		 else
+			 tmpbad++;
+	 }
+	
+	 ofstream File(path);
+	 File << "Lp.; Próba; Odchy³ka wys[mmm]; Odchy³ka szer[mm]; Png; WSZYSTKIE:;" << tmp->Count<<" ; ZAAKCEPTOWANE: ; "<<tmpok<<" ; ODRZUCONE:;"<<tmpbad << endl;
+	 for (i=0; i < tmp->Count; i++)
+	 {
+		 File << i << "; ";
+		 if (tmp[i] == 1)
+			 File << "DOBRY;" << list1[i] << ";" << list2[i];
+		 else
+			 File << "Z£Y;" << list1[i] << "; " << list2[i];
+		 File << "; " << "protokó³" << i << ".png " << "; ;" << endl ;
+		 
+	 }
+	 File.close();
+	 list->Clear();
+	 list1->Clear();
+	 list2->Clear();
+}
+ private: void CalibrationSave( double width, double height, double diff, double ratio)
+ {
+		saveFileDialog2->ShowDialog();
+		System::String^ file_path = saveFileDialog2->FileName;
+		string path = msclr::interop::marshal_as<std::string>(file_path);
+		ofstream File(path);
+		File << "bazowa szerokosc:\n " << width << endl << "bazowa wysokosc:\n " << height << endl << "tolerancja:\n " << diff << endl << "ratio:\n" << ratio <<endl << "Dolna wartoœæ progowania:\n"<< this->trackBar1->Value << endl <<"Górna wartoœæ progowania:\n" <<this->trackBar2->Value<< endl;
+		File.close();
+
+ }
+private: void CalibrationRead()
+{
+	string tmp;
+	openFileDialog1->ShowDialog();
+	System::String^ file_path = openFileDialog1->FileName;
+	string path = msclr::interop::marshal_as<std::string>(file_path);
+	ifstream File(path);
+	if (File.is_open())
+	{
+		std::getline(File, tmp);
+		std::getline(File, tmp);
+		basic_width = std::stod(tmp);
+		std::getline(File, tmp);
+		std::getline(File, tmp);
+		basic_height = std::stod(tmp);
+		std::getline(File, tmp);
+		std::getline(File, tmp);
+		diff = std::stod(tmp);
+		std::getline(File, tmp);
+		std::getline(File, tmp);
+		px_mm_ratio = std::stod(tmp);
+		std::getline(File, tmp);
+		std::getline(File, tmp);
+		this->trackBar1->Value = std::stoi(tmp);
+		std::getline(File, tmp);
+		std::getline(File, tmp);
+		this->trackBar2->Value = std::stoi(tmp);
+		File.close();
+	
+		this->label6->Text = System::Convert::ToString(trackBar1->Value);
+		this->label7->Text = System::Convert::ToString(trackBar2->Value);
+	
+	}
+		MessageBox::Show("Wczytanie parametrów powiod³o siê. ", "Wczytanie", MessageBoxButtons::OK, MessageBoxIcon::Information);
+		
+
+	
+
+}
+private: System::Void toolStripMenuItem3_Click(System::Object^  sender, System::EventArgs^  e) {
+	
+	CalibrationRead();
+}
 };
 }
