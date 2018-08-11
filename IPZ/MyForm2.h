@@ -27,7 +27,7 @@ namespace IPZ {
 			//TODO: Add the constructor code here
 			//
 		}
-	public: static long double test_height=0, test_width=0,tolerancja=0;
+	public: static double test_height=0, test_width=0,tolerancja=0;
 	private: System::Windows::Forms::Label^  label3;
 	public:
 	private: System::Windows::Forms::Label^  label4;
